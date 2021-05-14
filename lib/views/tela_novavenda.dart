@@ -1,3 +1,4 @@
+import 'package:badydoces/repositories/venda_repository.dart';
 import 'package:flutter/material.dart';
 
 class TelaNv extends StatefulWidget {
@@ -19,12 +20,15 @@ class _TelaNvState extends State<TelaNv> {
         backgroundColor: Colors.black,
         title: Text('Nova venda'),
       ),
-      body: Column(
+      body: //Consumer<SaleRepository>(builder: (context, repository, child){
+          //
+          // })
+          Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Flexible(
-            flex: 2,
+            flex: 1,
             child: Container(
               margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
               child: Column(
@@ -133,7 +137,7 @@ class _TelaNvState extends State<TelaNv> {
                       ),
                       SizedBox(width: 45),
                       Flexible(
-                        flex: 1,
+                        flex: 2,
                         child: Container(
                           child: TextField(
                             style: TextStyle(
@@ -154,8 +158,35 @@ class _TelaNvState extends State<TelaNv> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      //SizedBox(width: 400),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: IconButton(
+                            splashColor: Colors.white,
+                            iconSize: 30,
+                            splashRadius: 40,
+                            icon: Icon(
+                              Icons.add_shopping_cart,
+                            ),
+                            onPressed: () {}),
+                      )
+                    ],
+                  )
                 ],
               ),
+            ),
+          ),
+          Flexible(
+            flex: 1,
+            child: Row(
+              children: [/*ListView()*/],
             ),
           )
         ],
