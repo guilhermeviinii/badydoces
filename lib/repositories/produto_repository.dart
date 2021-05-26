@@ -28,7 +28,8 @@ class ProductRepository extends ChangeNotifier {
   }
 
   Future<void> read() async {
-    var response = await http.get('');
+    var response =
+        await http.get('https://backend-badydoces.herokuapp.com/show-product');
     if (response.statusCode == 200) {
       Iterable products = jsonDecode(response.body) as List;
       var lista = products.map((objeto) => Product.fromJson(objeto));
