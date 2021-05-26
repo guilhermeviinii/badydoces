@@ -1,17 +1,19 @@
-import 'package:badydoces/repositories/venda_repository.dart';
+import 'package:badydoces/models/categoria.model.dart';
+import 'package:badydoces/models/produto.model.dart';
+import 'package:badydoces/repositories/categoria_repository.dart';
+import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class TelaNv extends StatefulWidget {
-  @override
-  _TelaNvState createState() => _TelaNvState();
-}
-
-class _TelaNvState extends State<TelaNv> {
-  String dropDownValue = "Bala";
-  String dropDownValue2 = "Bala 7 Belo";
-  String dropDownValue3 = "1";
+class TelaNv extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var pRepository = Provider.of<ProductRepository>(context);
+    var cRepository = Provider.of<CategoryRepository>(context);
+
+    var dropDownValue = '';
+    var dropDownValue2 = '';
+
     return Scaffold(
       backgroundColor: Color.fromARGB(-31, 0, 152, 218),
       resizeToAvoidBottomInset: false,
@@ -20,10 +22,7 @@ class _TelaNvState extends State<TelaNv> {
         backgroundColor: Colors.black,
         title: Text('Nova venda'),
       ),
-      body: //Consumer<SaleRepository>(builder: (context, repository, child){
-          //
-          // })
-          Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -79,12 +78,12 @@ class _TelaNvState extends State<TelaNv> {
                           isDense: false,
                           style: const TextStyle(color: Colors.black),
                           underline: SizedBox(),
-                          items: <String>['Bala', 'Pirulito', 'Doces']
-                              .map<DropdownMenuItem<String>>((String value) {
+                          items: cRepository.categorias
+                              .map<DropdownMenuItem<String>>((Categoria value) {
                             return DropdownMenuItem<String>(
-                              value: value,
+                              value: value.name,
                               child: Text(
-                                value,
+                                value.name,
                                 style: TextStyle(
                                   fontSize: 25,
                                 ),
@@ -92,9 +91,7 @@ class _TelaNvState extends State<TelaNv> {
                             );
                           }).toList(),
                           onChanged: (String newValue) {
-                            setState(() {
-                              dropDownValue = newValue;
-                            });
+                            dropDownValue = newValue;
                           },
                         ),
                       ),
@@ -113,15 +110,12 @@ class _TelaNvState extends State<TelaNv> {
                           isDense: false,
                           style: const TextStyle(color: Colors.black),
                           underline: SizedBox(),
-                          items: <String>[
-                            'Bala 7 Belo',
-                            'Bala Erlan',
-                            'Bala Café'
-                          ].map<DropdownMenuItem<String>>((String value) {
+                          items: pRepository.products
+                              .map<DropdownMenuItem<String>>((Product value) {
                             return DropdownMenuItem<String>(
-                              value: value,
+                              value: value.toString(),
                               child: Text(
-                                value,
+                                value.toString(),
                                 style: TextStyle(
                                   fontSize: 25,
                                 ),
@@ -129,9 +123,7 @@ class _TelaNvState extends State<TelaNv> {
                             );
                           }).toList(),
                           onChanged: (String newValue) {
-                            setState(() {
-                              dropDownValue2 = newValue;
-                            });
+                            dropDownValue2 = newValue;
                           },
                         ),
                       ),
@@ -183,12 +175,14 @@ class _TelaNvState extends State<TelaNv> {
               ),
             ),
           ),
-          Flexible(
-            flex: 1,
-            child: Row(
-              children: [/*ListView()*/],
-            ),
-          )
+          // Flexible(
+          //   flex: 1,
+          //   child: Row(
+          //     children: [
+          //       ListView(),
+          //     ],
+          //   ),
+          // )
         ],
       ),
     );
