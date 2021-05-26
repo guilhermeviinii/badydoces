@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 
-class TelaInicial extends StatelessWidget {
-  String image = "assets/images/LOGO.png";
+import 'components/bottomNaviBar/index.dart';
+
+class TelaInicial extends StatefulWidget {
+  @override
+  _TelaInicialState createState() => _TelaInicialState();
+}
+
+class _TelaInicialState extends State<TelaInicial> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(-31, 0, 152, 218),
+      //backgroundColor: Color.fromARGB(-31, 0, 152, 218),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.black,
-        title: Text('Tela inicial'),
+        title: Text('Bady Doces'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -25,23 +31,11 @@ class TelaInicial extends StatelessWidget {
               flex: 4,
               child: Container(
                 margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    botao_nv(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    botao_estoque(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    botao_cv(),
-                  ],
-                ),
+                child: Column(),
               )),
         ],
       ),
+      bottomNavigationBar: BottomNaviBar(),
     );
   }
 }
@@ -73,13 +67,13 @@ class card_vendas extends StatelessWidget {
               title: Text(
                 'Total de vendas',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 25,
                 ),
               ),
               subtitle: Text(
                 '\nR\$ 1000,00',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -115,147 +109,18 @@ class card_produtos extends StatelessWidget {
               title: Text(
                 'Produtos acabando',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 25,
                 ),
               ),
               subtitle: Text(
                 '\nPaçoca - 1 unidade',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 16,
                 ),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class botao_nv extends StatelessWidget {
-  const botao_nv({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
-      textColor: Colors.black,
-      height: 80.0,
-      color: Colors.white,
-      onPressed: () {
-        Navigator.of(context).pushNamed('/nova_venda');
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.add_box_outlined,
-              size: 80,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            '   Nova Venda',
-            style: TextStyle(
-              fontSize: 50,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class botao_estoque extends StatelessWidget {
-  const botao_estoque({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
-      textColor: Colors.black,
-      height: 80.0,
-      color: Colors.white,
-      onPressed: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => estoque1()),
-        // );
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.store_mall_directory_outlined,
-              size: 80,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            '      Estoque',
-            style: TextStyle(
-              fontSize: 50,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class botao_cv extends StatelessWidget {
-  const botao_cv({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
-      textColor: Colors.black,
-      height: 80.0,
-      color: Colors.white,
-      onPressed: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => estoque1()),
-        // );
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.monetization_on_outlined,
-              size: 80,
-              color: Colors.black,
-            ),
-          ),
-          Text(
-            '   Ctrl Vendas',
-            style: TextStyle(
-              fontSize: 50,
-            ),
-          ),
-        ],
       ),
     );
   }
