@@ -55,7 +55,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         children: <Widget>[
           TextFormField(
             decoration: const InputDecoration(
-              hintText: 'Usuário',
+              labelText: 'Usuário',
+              contentPadding: EdgeInsets.symmetric(horizontal: 20),
+              border: OutlineInputBorder(),
             ),
             validator: (String value) {
               if (value == null || value.isEmpty) {
@@ -68,8 +70,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             margin: EdgeInsets.only(top: 40),
             child: TextFormField(
               decoration: const InputDecoration(
-                hintText: 'Senha',
+                labelText: 'Senha',
+                contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                border: OutlineInputBorder(),
               ),
+              obscureText: true,
+              keyboardType: TextInputType.text,
               validator: (String value) {
                 print(value);
                 if (value == null || value.isEmpty) {
@@ -96,8 +102,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       elevation: 4,
                     ),
                     onPressed: () {
-                      // Validate will return true if the form is valid, or false if
-                      // the form is invalid.
+                      Navigator.of(context).pushNamed('/tela_inicial');
                       if (_formKey.currentState.validate()) {
                         // Process data.
                       }

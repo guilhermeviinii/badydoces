@@ -15,7 +15,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         _selectedIndex = index;
       });
       if (_selectedIndex == 0) {
-        Navigator.of(context).pushNamed('/');
+        Navigator.of(context).pushNamed('/tela_inicial');
       } else if (_selectedIndex == 1) {
         Navigator.of(context).pushNamed('/nova_venda');
       } else if (_selectedIndex == 2) {
