@@ -64,17 +64,20 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               return null;
             },
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Senha',
+          Container(
+            margin: EdgeInsets.only(top: 40),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Senha',
+              ),
+              validator: (String value) {
+                print(value);
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, insira sua senha';
+                }
+                return null;
+              },
             ),
-            validator: (String value) {
-              print(value);
-              if (value == null || value.isEmpty) {
-                return 'Por favor, insira sua senha';
-              }
-              return null;
-            },
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -82,9 +85,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  
+                  margin: EdgeInsets.only(top: 40),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      onPrimary: Colors.white,
+                      primary: Colors.black54,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 150, vertical: 20),
                       shadowColor: Colors.black54,
                       elevation: 4,
                     ),
