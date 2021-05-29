@@ -67,7 +67,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             },
           ),
           Container(
-            margin: EdgeInsets.only(top: 40),
+            margin: EdgeInsets.only(top: 16),
             child: TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Senha',
@@ -91,7 +91,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 40),
+                  margin: EdgeInsets.only(top: 16),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       onPrimary: Colors.white,
