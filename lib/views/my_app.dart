@@ -1,6 +1,7 @@
 import 'package:badydoces/views/Home/home.dart';
 import 'package:badydoces/views/Login/index.dart';
 import 'package:badydoces/views/NewSale/new_sale.dart';
+import 'package:badydoces/views/Stock/form_stock/stock.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => Login(),
         '/tela_inicial': (context) => Home(),
         '/nova_venda': (context) => NewSale(),
+        '/estoque': (context) => Stock(),
       },
       initialRoute: '/',
     );

@@ -1,4 +1,5 @@
 import 'package:badydoces/views/NewSale/form_new_sale/form_new_sale_widget.dart';
+import 'package:badydoces/views/components/bottomNaviBar/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,6 +23,7 @@ class NewSale extends StatelessWidget {
         ),
       ),
       body: FormNewSaleWidget(),
+      bottomNavigationBar: BottomNaviBar(),
     );
   }
 }
