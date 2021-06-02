@@ -49,30 +49,32 @@ class _StockState extends State<Stock> {
                     offset: Offset(1, 4),
                   ),
                 ]),
-            child: DropdownButton(
-              value: (itemSelecionado == null)
-                  ? itemSelecionado
-                  : itemSelecionado.name,
-              hint: Text('Selecione a categoria'),
-              icon: Icon(
-                Icons.arrow_drop_down,
-                size: 30,
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: (itemSelecionado == null)
+                    ? itemSelecionado
+                    : itemSelecionado.name,
+                hint: Text('Selecione a categoria'),
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  size: 30,
+                ),
+                isExpanded: true,
+                style: TextStyle(color: Colors.black, fontSize: 16),
+                items:
+                    categorias.map<DropdownMenuItem<String>>((Categoria value) {
+                  return DropdownMenuItem<String>(
+                    value: value.name,
+                    child: Text(value.name),
+                  );
+                }).toList(),
+                onChanged: (var newValue) {
+                  setState(() {
+                    itemSelecionado =
+                        categorias.firstWhere((cat) => cat.name == newValue);
+                  });
+                },
               ),
-              isExpanded: true,
-              style: TextStyle(color: Colors.black, fontSize: 16),
-              items:
-                  categorias.map<DropdownMenuItem<String>>((Categoria value) {
-                return DropdownMenuItem<String>(
-                  value: value.name,
-                  child: Text(value.name),
-                );
-              }).toList(),
-              onChanged: (var newValue) {
-                setState(() {
-                  itemSelecionado =
-                      categorias.firstWhere((cat) => cat.name == newValue);
-                });
-              },
             ),
           ),
           Container(
