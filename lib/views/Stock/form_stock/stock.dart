@@ -3,13 +3,33 @@ import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/views/components/bottomNaviBar/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class Stock extends StatelessWidget {
+class Stock extends StatefulWidget {
+  @override
+  _StockState createState() => _StockState();
+}
+
+class _StockState extends State<Stock> {
   @override
   Widget build(BuildContext context) {
-    var repository = CategoryRepository();
+    var repository = Provider.of<CategoryRepository>(context, listen: true);
 
-    var dropValue = 1;
+    var categorias = repository.categorias;
+
+    // Future<List<Categoria>> aloamor() async {
+    //   var categorias = await repository.read();
+    //   //print(categorias);
+    //   return categorias;
+    // }
+
+    //print(categorias);
+    // print(aloamor());
+    //aloamor();
+
+    // List<CategoryRepository> categoria;
+    // print(repository.categorias);
+    var dropValue = "Chocolates";
 
     return Scaffold(
       appBar: AppBar(
@@ -39,10 +59,9 @@ class Stock extends StatelessWidget {
             onChanged: (newValue) {
               dropValue = newValue;
             },
-            items: repository.categorias
-                .map<DropdownMenuItem<String>>((Categoria value) {
+            items: categorias.map<DropdownMenuItem<String>>((Categoria value) {
               return DropdownMenuItem<String>(
-                value: value.id,
+                value: value.name,
                 child: Text(value.name),
               );
             }).toList(),
