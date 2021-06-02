@@ -47,31 +47,31 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                 return null;
               },
             ),
-            Container(
-              decoration: BoxDecoration(),
-              margin: EdgeInsets.only(top: 16),
-              width: double.infinity,
-              child: DropdownButton(
-                  value: dropValue.isNotEmpty ? dropValue : null,
-                  hint: Text('Selecione uma categoria'),
-                  isExpanded: true,
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                    size: 40,
-                  ),
-                  elevation: 16,
-                  onChanged: (newValue) {
-                    dropValue = newValue;
-                  },
-                  items: categorias.isNotEmpty ??
-                      categorias
-                          .map<DropdownMenuItem<String>>((Categoria value) {
-                        return DropdownMenuItem<String>(
-                          value: value?.name,
-                          child: Text(value.name),
-                        );
-                      }).toList()),
-            ),
+            // Container(
+            //   decoration: BoxDecoration(),
+            //   margin: EdgeInsets.only(top: 16),
+            //   width: double.infinity,
+            //   child: DropdownButton(
+            //       value: dropValue.isNotEmpty ? dropValue : null,
+            //       hint: Text('Selecione uma categoria'),
+            //       isExpanded: true,
+            //       icon: const Icon(
+            //         Icons.arrow_drop_down,
+            //         size: 40,
+            //       ),
+            //       elevation: 16,
+            //       onChanged: (newValue) {
+            //         dropValue = newValue;
+            //       },
+            //       items: categorias.isNotEmpty ??
+            //           categorias
+            //               .map<DropdownMenuItem<String>>((Categoria value) {
+            //             return DropdownMenuItem<String>(
+            //               value: value?.name,
+            //               child: Text(value.name),
+            //             );
+            //           }).toList()),
+            // ),
             Row(
               children: [
                 Flexible(
