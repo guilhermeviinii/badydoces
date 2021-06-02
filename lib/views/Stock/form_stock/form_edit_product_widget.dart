@@ -48,7 +48,7 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
         _formKey.currentState.save();
 
         if (itemSelecionado != null) {
-          product.category = itemSelecionado.name;
+          product.name_category = itemSelecionado.name;
         }
 
         await repositoryP.update(product);
@@ -186,7 +186,7 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           value: (itemSelecionado == null)
-              ? itemSelecionado.name = product.category
+              ? itemSelecionado.name = product.name_category
               : itemSelecionado.name,
           hint: Text(
             'Selecione a categoria',

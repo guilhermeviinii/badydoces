@@ -51,7 +51,7 @@ class _FormNewProductWidgetState extends State<FormNewProductWidget> {
         BuildContext context, ProductRepository repositoryP) async {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
-        product.category = itemSelecionado.name;
+        product.name_category = itemSelecionado.name;
         if (await repositoryP.create(product)) {
           confirmarAdd(context);
         } else {
