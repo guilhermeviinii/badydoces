@@ -1,5 +1,7 @@
 import 'package:badydoces/models/categoria.model.dart';
+import 'package:badydoces/models/produto.model.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
+import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:badydoces/views/components/bottomNaviBar/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,8 +17,32 @@ Categoria itemSelecionado;
 class _StockState extends State<Stock> {
   @override
   Widget build(BuildContext context) {
-    var repository = Provider.of<CategoryRepository>(context, listen: true);
-    var categorias = repository.categorias;
+    var repositoryCategory =
+        Provider.of<CategoryRepository>(context, listen: true);
+    var repositoryProduct =
+        Provider.of<ProductRepository>(context, listen: true);
+    var categorias = repositoryCategory.categorias;
+    var produtos = repositoryProduct.products;
+    var auxProdutos = produtos;
+
+    for (var c in auxProdutos) {
+      print(c.category);
+    }
+
+    if (itemSelecionado != null) {
+      print(auxProdutos);
+      for (var c in auxProdutos) {
+        print(c.category);
+      }
+      for (var x in auxProdutos) {
+        print('object1222');
+        if (x.category == itemSelecionado.name.toString()) {
+          print('object');
+          produtos = repositoryProduct.products;
+        }
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -44,8 +70,8 @@ class _StockState extends State<Stock> {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    blurRadius: 4,
-                    color: Colors.grey,
+                    blurRadius: 2,
+                    color: Colors.blue,
                     offset: Offset(1, 4),
                   ),
                 ]),
@@ -54,7 +80,12 @@ class _StockState extends State<Stock> {
                 value: (itemSelecionado == null)
                     ? itemSelecionado
                     : itemSelecionado.name,
-                hint: Text('Selecione a categoria'),
+                hint: Text(
+                  'Selecione a categoria',
+                  style: GoogleFonts.ubuntu(
+                    color: Colors.black,
+                  ),
+                ),
                 icon: Icon(
                   Icons.arrow_drop_down,
                   size: 30,
@@ -72,51 +103,63 @@ class _StockState extends State<Stock> {
                   setState(() {
                     itemSelecionado =
                         categorias.firstWhere((cat) => cat.name == newValue);
+                    produtos.clear();
                   });
                 },
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(10),
-            height: 2,
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.1),
-            ),
-          ),
+          Divider(),
           Expanded(
-            child: ListView(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 30, right: 30),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(11.36),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.15),
-                          spreadRadius: 2,
-                          blurRadius: 3,
-                          offset: Offset(1, 3),
+            child: ListView.builder(
+              itemCount: produtos.length,
+              itemBuilder: (_, index) {
+                var nome = produtos[index];
+                return Dismissible(
+                  key: Key(nome.name),
+                  child: Container(
+                    margin: EdgeInsets.only(left: 30, right: 30, top: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(11.36),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 2,
+                            offset: Offset(1, 3),
+                          ),
+                        ]),
+                    child: ListTile(
+                      title: Text(
+                        nome.name,
+                        style: GoogleFonts.ubuntu(
+                          color: Colors.black,
                         ),
-                      ]),
-                  child: ListTile(
-                    title: Text('Produto'),
-                    subtitle: Text('Preço'),
-                    trailing: Container(
-                      width: 20,
-                      child: Row(
-                        children: [
-                          Text(
-                            '5',
-                            style: TextStyle(fontSize: 16),
-                          )
-                        ],
+                      ),
+                      subtitle: Text(
+                        nome.price.toString(),
+                        style: GoogleFonts.ubuntu(
+                          color: Colors.black,
+                        ),
+                      ),
+                      trailing: Container(
+                        width: 20,
+                        child: Row(
+                          children: [
+                            Text(
+                              nome.amount.toString(),
+                              style: GoogleFonts.ubuntu(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
           ),
         ],

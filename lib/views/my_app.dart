@@ -1,4 +1,5 @@
 import 'package:badydoces/repositories/categoria_repository.dart';
+import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:badydoces/views/Home/home.dart';
 import 'package:badydoces/views/Login/index.dart';
 import 'package:badydoces/views/NewSale/new_sale.dart';
@@ -9,8 +10,15 @@ import 'package:flutter/material.dart';
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CategoryRepository(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CategoryRepository(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProductRepository(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
