@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:badydoces/models/categoria.model.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
+import 'package:badydoces/views/NewSale/dropdown_input/dropdown_input_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -33,64 +34,49 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
         child: Column(
           children: <Widget>[
             // Add TextFormFields and ElevatedButton here.
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Cliente',
-                border: OutlineInputBorder(),
-              ),
+            Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintStyle: TextStyle(color: Color(0xFF4360F6)),
+                    labelText: 'Cliente',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color(0xFF4360F6), width: 2.0),
+                    )),
 
-              // The validator receives the text that the user has entered.
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
+                // The validator receives the text that the user has entered.
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return '';
+                  }
+                  return null;
+                },
+              ),
             ),
             Container(
               decoration: BoxDecoration(),
               margin: EdgeInsets.only(top: 16),
               width: double.infinity,
-              child: DropdownButton(
-                  value: dropValue.isNotEmpty ? dropValue : null,
-                  hint: Text('Selecione uma categoria'),
-                  isExpanded: true,
-                  icon: const Icon(
-                    Icons.arrow_drop_down,
-                    size: 40,
-                  ),
-                  elevation: 16,
-                  onChanged: (newValue) {
-                    dropValue = newValue;
-                  },
-                  items: categorias.isNotEmpty ??
-                      categorias
-                          .map<DropdownMenuItem<String>>((Categoria value) {
-                        return DropdownMenuItem<String>(
-                          value: value?.name,
-                          child: Text(value.name),
-                        );
-                      }).toList()),
+              child: DropDownInputWidget(
+                list: categorias,
+                label: 'Selecione uma categoria',
+              ),
             ),
+
             Row(
               children: [
                 Flexible(
-                  flex: 4,
+                  flex: 5,
                   child: Container(
+                    decoration: BoxDecoration(),
                     margin: EdgeInsets.only(top: 16),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Produto',
-                        border: OutlineInputBorder(),
-                      ),
-
-                      // The validator receives the text that the user has entered.
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
+                    width: double.infinity,
+                    child: DropDownInputWidget(
+                      list: categorias,
+                      label: 'Selecione um produto',
                     ),
                   ),
                 ),
@@ -98,16 +84,23 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                   flex: 1,
                   child: Container(
                     margin: EdgeInsets.only(top: 16, left: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Quantidade',
-                        border: OutlineInputBorder(),
-                      ),
+                          labelText: 'Qtd',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Color(0xFF4360F6), width: 2.0),
+                          )),
 
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
+                          return '';
                         }
                         return null;
                       },
@@ -128,13 +121,15 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                   ),
                 ),
                 onPressed: () {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  if (_formKey.currentState.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Processing Data')));
-                  }
+                  // if (_formKey.currentState.validate()) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      'Venda adicionada com sucesso',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: Colors.green,
+                  ));
+                  // }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
