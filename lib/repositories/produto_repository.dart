@@ -40,9 +40,8 @@ class ProductRepository extends ChangeNotifier {
     }
   }
 
-  Future<void> delete(String id) async {
-    var response = await http
-        .delete("https://backend-badydoces.herokuapp.com/delete-product/$id");
+  Future<void> delete(int id) async {
+    var response = await http.delete("/$id");
     if (response.statusCode == 200) {
       this.products.removeWhere((product) => product.id == id);
       notifyListeners();
