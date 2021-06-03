@@ -10,29 +10,16 @@ class Stock extends StatefulWidget {
   _StockState createState() => _StockState();
 }
 
+Categoria itemSelecionado;
+
 class _StockState extends State<Stock> {
   @override
   Widget build(BuildContext context) {
     var repository = Provider.of<CategoryRepository>(context, listen: true);
-
     var categorias = repository.categorias;
-
-    // Future<List<Categoria>> aloamor() async {
-    //   var categorias = await repository.read();
-    //   //print(categorias);
-    //   return categorias;
-    // }
-
-    //print(categorias);
-    // print(aloamor());
-    //aloamor();
-
-    // List<CategoryRepository> categoria;
-    // print(repository.categorias);
-    var dropValue = "Chocolates";
-
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         iconTheme: IconThemeData(
           color: Colors.black,
@@ -49,22 +36,88 @@ class _StockState extends State<Stock> {
       ),
       body: Column(
         children: [
-          DropdownButton(
-            value: dropValue,
-            icon: const Icon(
-              Icons.arrow_drop_down,
-              size: 40,
+          Container(
+            margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(11.36),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4,
+                    color: Colors.grey,
+                    offset: Offset(1, 4),
+                  ),
+                ]),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: (itemSelecionado == null)
+                    ? itemSelecionado
+                    : itemSelecionado.name,
+                hint: Text('Selecione a categoria'),
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  size: 30,
+                ),
+                isExpanded: true,
+                style: TextStyle(color: Colors.black, fontSize: 16),
+                items:
+                    categorias.map<DropdownMenuItem<String>>((Categoria value) {
+                  return DropdownMenuItem<String>(
+                    value: value.name,
+                    child: Text(value.name),
+                  );
+                }).toList(),
+                onChanged: (var newValue) {
+                  setState(() {
+                    itemSelecionado =
+                        categorias.firstWhere((cat) => cat.name == newValue);
+                  });
+                },
+              ),
             ),
-            elevation: 16,
-            onChanged: (newValue) {
-              dropValue = newValue;
-            },
-            items: categorias.map<DropdownMenuItem<String>>((Categoria value) {
-              return DropdownMenuItem<String>(
-                value: value.name,
-                child: Text(value.name),
-              );
-            }).toList(),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            height: 2,
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.1),
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 30, right: 30),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(11.36),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.15),
+                          spreadRadius: 2,
+                          blurRadius: 3,
+                          offset: Offset(1, 3),
+                        ),
+                      ]),
+                  child: ListTile(
+                    title: Text('Produto'),
+                    subtitle: Text('Preço'),
+                    trailing: Container(
+                      width: 20,
+                      child: Row(
+                        children: [
+                          Text(
+                            '5',
+                            style: TextStyle(fontSize: 16),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
