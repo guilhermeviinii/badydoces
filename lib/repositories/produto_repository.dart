@@ -39,17 +39,6 @@ class ProductRepository extends ChangeNotifier {
     }
   }
 
-  // Future<void> findCategory(String categoria) async {
-  //   var response =
-  //       await http.get('https://backend-badydoces.herokuapp.com/show-product');
-  //   if (response.statusCode == 200) {
-  //     Iterable products = jsonDecode(response.body) as List;
-  //     var lista = products.singleWhere((cat) => null);
-  //     this.products = lista.toList();
-  //     notifyListeners();
-  //   }
-  // }
-
   Future<void> delete(int id) async {
     var response = await http.delete("/$id");
     if (response.statusCode == 200) {
