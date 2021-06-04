@@ -24,40 +24,12 @@ class _StockState extends State<Stock> {
         Provider.of<ProductRepository>(context, listen: true);
     var categorias = repositoryCategory.categorias;
     Iterable<Product> produtosCat;
-    List<Product> auxiliar;
+
     var produtos = repositoryProduct.products;
 
     if (itemSelecionado != null) {
       produtosCat = repositoryProduct.products
           .where((product) => product.name_category == itemSelecionado.name);
-    }
-
-    Future<bool> adicionarProduto(BuildContext context) async {
-      return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // SizedBox(height: 10),
-              // //dropDownCAtegoria(categorias),
-              // SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: "Produto",
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              // SizedBox(height: 10),
-              FlatButton(
-                child: Text("Ok"),
-                onPressed: () => Navigator.of(context).pop(true),
-              ),
-            ],
-          );
-        },
-      );
     }
 
     return Scaffold(
@@ -75,127 +47,82 @@ class _StockState extends State<Stock> {
             color: Colors.white,
           ),
         ),
-        actions: [
-          IconButton(
-              iconSize: 30,
-              padding: EdgeInsets.only(right: 20),
-              icon: Icon(
-                Icons.home,
-              ),
-              hoverColor: Colors.white,
-              splashColor: Colors.white,
-              highlightColor: Colors.white,
-              onPressed: () {} //=> adicionarProduto(context),
-              ),
-        ],
       ),
       body: Column(
         children: [
           dropDownCAtegoria(categorias),
           Divider(),
           Expanded(
-            child: (itemSelecionado == null)
-                ? ListView.builder(
-                    itemCount: produtos.length,
-                    itemBuilder: (_, index) {
-                      var nome = produtos[index];
-                      return Dismissible(
-                        key: Key(nome.name),
-                        child: Container(
-                          margin: EdgeInsets.only(left: 30, right: 30, top: 10),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(11.36),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  blurRadius: 2,
-                                  offset: Offset(1, 3),
-                                ),
-                              ]),
-                          child: ListTile(
-                            title: Text(
-                              nome.name,
-                              style: GoogleFonts.ubuntu(
-                                color: Colors.black,
-                              ),
-                            ),
-                            subtitle: Text(
-                              nome.price.toString(),
-                              style: GoogleFonts.ubuntu(
-                                color: Colors.black,
-                              ),
-                            ),
-                            trailing: Container(
-                              width: 20,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    nome.amount.toString(),
-                                    style: GoogleFonts.ubuntu(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+              child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: (itemSelecionado == null)
+                ? produtos.length
+                : produtosCat.length,
+            itemBuilder: (_, index) {
+              var product = (itemSelecionado == null)
+                  ? produtos[index]
+                  : produtosCat.toList()[index];
+              return Dismissible(
+                key: Key(product.name),
+                background: Container(
+                  color: Colors.red,
+                ),
+                onDismissed: (direction) {
+                  repositoryProduct.delete(product.id);
+                },
+                confirmDismiss: (direction) {
+                  return confirmarExclusao(context);
+                },
+                child: Container(
+                  margin: EdgeInsets.only(left: 30, right: 30, top: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(11.36),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 2,
+                          offset: Offset(1, 3),
                         ),
+                      ]),
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        '/edit_product',
+                        arguments: product,
                       );
                     },
-                  )
-                : ListView.builder(
-                    itemCount: produtosCat.length,
-                    itemBuilder: (_, index) {
-                      var nome = produtosCat.toList()[index];
-                      return Dismissible(
-                        key: Key(nome.name),
-                        child: Container(
-                          margin: EdgeInsets.only(left: 30, right: 30, top: 10),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(11.36),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  blurRadius: 2,
-                                  offset: Offset(1, 3),
-                                ),
-                              ]),
-                          child: ListTile(
-                            title: Text(
-                              nome.name,
-                              style: GoogleFonts.ubuntu(
-                                color: Colors.black,
-                              ),
-                            ),
-                            subtitle: Text(
-                              nome.price.toString(),
-                              style: GoogleFonts.ubuntu(
-                                color: Colors.black,
-                              ),
-                            ),
-                            trailing: Container(
-                              width: 20,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    nome.amount.toString(),
-                                    style: GoogleFonts.ubuntu(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                    ),
-                                  )
-                                ],
-                              ),
+                    title: Text(
+                      product.name,
+                      style: GoogleFonts.ubuntu(
+                        color: Colors.black,
+                      ),
+                    ),
+                    subtitle: Text(
+                      product.price.toString(),
+                      style: GoogleFonts.ubuntu(
+                        color: Colors.black,
+                      ),
+                    ),
+                    trailing: Container(
+                      width: 20,
+                      child: Row(
+                        children: [
+                          Text(
+                            product.amount.toString(),
+                            style: GoogleFonts.ubuntu(
+                              color: Colors.black,
+                              fontSize: 16,
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        ],
+                      ),
+                    ),
                   ),
-          ),
+                ),
+              );
+            },
+          )),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
