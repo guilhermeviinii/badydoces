@@ -8,6 +8,9 @@ import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import 'Stock/form_stock/add_products.dart';
+import 'Stock/form_stock/edit_products.dart';
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -23,8 +26,10 @@ class MyApp extends StatelessWidget {
           '/tela_inicial': (context) => Home(),
           '/nova_venda': (context) => NewSale(),
           '/estoque': (context) => Stock(),
+          '/add_product': (context) => AddProduct(),
+          '/edit_product': (context) => EditProduct(),
         },
-        initialRoute: '/',
+        initialRoute: '/edit_product',
       ),
     );
   }
