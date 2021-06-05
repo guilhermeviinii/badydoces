@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import 'Stock/form_stock/add_products.dart';
 import 'Stock/form_stock/edit_products.dart';
+import 'components/bottomNaviBar/ListSale/listSales.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -28,8 +29,9 @@ class MyApp extends StatelessWidget {
           '/estoque': (context) => Stock(),
           '/add_product': (context) => AddProduct(),
           '/edit_product': (context) => EditProduct(),
+          '/listsales': (context) => ListSales(),
         },
-        initialRoute: '/edit_product',
+        initialRoute: '/',
       ),
     );
   }

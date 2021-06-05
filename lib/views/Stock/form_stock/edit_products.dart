@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'form_edit_product_widget.dart';
-import 'form_new_product_widget.dart';
 
 class EditProduct extends StatelessWidget {
   @override

@@ -50,6 +50,7 @@ class ProductRepository extends ChangeNotifier {
   }
 
   Future<void> update(Product product) async {
+    print(product.id);
     var response = await http.put(
         "https://backend-badydoces.herokuapp.com/update-product/${product.id}",
         body: jsonEncode(product.toJson()),
@@ -57,6 +58,7 @@ class ProductRepository extends ChangeNotifier {
           'Content-Type': 'application/json; charset=UTF-8',
         });
     if (response.statusCode == 200) {
+      print(product.id);
       int index = this.products.indexWhere((p) => p.id == product.id);
       this.products[index] = product;
       notifyListeners();
