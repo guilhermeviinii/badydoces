@@ -21,7 +21,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
       } else if (_selectedIndex == 2) {
         Navigator.of(context).pushNamed('/estoque');
       } else if (_selectedIndex == 3) {
-        Navigator.of(context).pushNamed('/estoque');
+        Navigator.of(context).pushNamed('/listsales');
       }
     }
 

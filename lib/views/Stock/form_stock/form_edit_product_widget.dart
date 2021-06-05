@@ -12,9 +12,9 @@ class FormEditProductWidget extends StatefulWidget {
       _FormEditProductWidgetWidgetState();
 }
 
-class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
-  Categoria itemSelecionado;
+Categoria itemSelecionado;
 
+class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
   @override
   Widget build(BuildContext context) {
     var repository = Provider.of<CategoryRepository>(context, listen: true);
@@ -24,6 +24,7 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
 
     Product product = ModalRoute.of(context).settings.arguments;
 
+    // itemSelecionado.name = product.category;
     Future<bool> confirmarEdit(BuildContext context) async {
       return showDialog(
         context: context,
@@ -46,7 +47,10 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
         BuildContext context, ProductRepository repositoryP) async {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
-        product.category = itemSelecionado.name;
+        if (itemSelecionado != null) {
+          product.category = itemSelecionado.name;
+        }
+
         await repositoryP.update(product);
         confirmarEdit(context);
       }
@@ -155,7 +159,7 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
                       margin: EdgeInsets.only(right: 16),
                       child: Icon(Icons.add_circle),
                     ),
-                    Text('Adicionar Produto'),
+                    Text('Salvar'),
                   ],
                 ),
                 onPressed: () => onSave(context, repositoryP),
@@ -170,6 +174,7 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
 //------------------------------------------------------------------------------------
   Container dropDownCAtegoria(List<Categoria> categorias) {
     Product product = ModalRoute.of(context).settings.arguments;
+    //itemSelecionado.name = product.category;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
@@ -181,10 +186,10 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           value: (itemSelecionado == null)
-              ? itemSelecionado.name = product.category
+              ? itemSelecionado
               : itemSelecionado.name,
           hint: Text(
-            'Selecione a categoria',
+            product.category,
             style: GoogleFonts.ubuntu(
               color: Colors.black,
             ),
