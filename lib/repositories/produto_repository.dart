@@ -6,10 +6,6 @@ import 'package:http/http.dart' as http;
 class ProductRepository extends ChangeNotifier {
   List<Product> products = List<Product>();
 
-  ProductRepository() {
-    read();
-  }
-
   Future<bool> create(Product product) async {
     var response = await http.post(
       'https://backend-badydoces.herokuapp.com/new-product',
@@ -22,15 +18,21 @@ class ProductRepository extends ChangeNotifier {
     if (response.statusCode == 200) {
       Product product = Product.fromJson(jsonDecode(response.body));
       this.products.add(product);
+
       notifyListeners();
       return true;
     }
     return false;
   }
 
-  Future<void> read() async {
-    var response =
-        await http.get('https://backend-badydoces.herokuapp.com/show-product');
+  Future<void> read(token) async {
+    var response = await http.get(
+      'https://backend-badydoces.herokuapp.com/show-product',
+      headers: {
+        'Content-type': '	application/json; charset=utf-8',
+        'Authorization': "Bearer $token"
+      },
+    );
     if (response.statusCode == 200) {
       Iterable products = jsonDecode(response.body) as List;
       var lista = products.map((objeto) => Product.fromJson(objeto));

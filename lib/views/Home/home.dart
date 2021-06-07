@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:badydoces/models/produto.model.dart';
+import 'package:provider/provider.dart';
 
 import 'package:badydoces/models/admin.model.dart';
+import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:badydoces/views/Home/home_controller.dart';
 import 'package:badydoces/views/Home/widgets/estoque_alerta/estoque_alerta_widget.dart';
 import 'package:badydoces/views/Home/widgets/total_vendas_card/total_vendas_card_widget.dart';
@@ -18,13 +21,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final HomeController controller = HomeController();
+  final HomeController homeController = HomeController();
+  final AuthController authController = AuthController();
+
   @override
   void initState() {
-    controller.fetchProducts();
+    authController.autenticar();
+    homeController.fetchProducts();
   }
 
   Widget build(BuildContext context) {
+    HomeController _homeController = Provider.of<HomeController>(context);
+    AuthController _authController = Provider.of<AuthController>(context);
+
+    List<Product> prodcuts = _homeController.products;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
