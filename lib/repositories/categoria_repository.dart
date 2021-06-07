@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:badydoces/models/admin.model.dart';
 import 'package:badydoces/models/categoria.model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryRepository extends ChangeNotifier {
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   List<Categoria> categorias = List<Categoria>();
 
   CategoryRepository() {
@@ -29,8 +32,16 @@ class CategoryRepository extends ChangeNotifier {
   }
 
   Future<void> read() async {
-    var response =
-        await http.get('https://backend-badydoces.herokuapp.com/show-category');
+    final SharedPreferences prefs = await _prefs;
+    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+    var token = usuario.token;
+    var response = await http.get(
+      'https://backend-badydoces.herokuapp.com/show-category',
+      headers: {
+        'Content-type': '	application/json; charset=utf-8',
+        'Authorization': "Bearer $token"
+      },
+    );
     if (response.statusCode == 200) {
       Iterable products = jsonDecode(response.body) as List;
       var lista = products.map((objeto) => Categoria.fromJson(objeto));

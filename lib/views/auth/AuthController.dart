@@ -17,6 +17,7 @@ class AuthController extends ChangeNotifier {
     bool isLogged = false;
     repository.admin = usuario;
     isLogged = await repository.login();
+    notifyListeners();
     return isLogged;
   }
 
