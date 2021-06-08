@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:badydoces/models/categoria.model.dart';
 import 'package:badydoces/models/produto.model.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
@@ -48,6 +47,19 @@ class _StockState extends State<Stock> {
             color: Colors.white,
           ),
         ),
+        actions: [
+          IconButton(
+              iconSize: 30,
+              padding: EdgeInsets.only(right: 20),
+              icon: Icon(
+                Icons.home,
+              ),
+              hoverColor: Colors.white,
+              splashColor: Colors.white,
+              highlightColor: Colors.white,
+              onPressed: () {} //=> adicionarProduto(context),
+              ),
+        ],
       ),
       body: Column(
         children: [
