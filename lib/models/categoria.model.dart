@@ -5,11 +5,11 @@ class Categoria {
   Categoria({this.name, this.id});
 
   Categoria.fromJson(Map<String, dynamic> json) {
-    name = json['category_name'];
+    name = json['name'];
     id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
-    return {'category_name': name, 'id': id};
+    return {'name': name, 'id': id};
   }
 }

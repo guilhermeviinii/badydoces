@@ -1,14 +1,19 @@
 class Product {
-  String id;
+  String product_id;
   String name;
-  String price;
+  double price;
   int amount;
   String name_category;
 
-  Product({this.id, this.name, this.price, this.amount, this.name_category});
+  Product(
+      {this.product_id,
+      this.name,
+      this.price,
+      this.amount,
+      this.name_category});
 
   Product.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    product_id = json['product_id'];
     name = json['name'];
     price = json['price'];
     amount = json['amount'];
@@ -17,7 +22,7 @@ class Product {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'product_id': product_id,
       'name': name,
       'price': price,
       'amount': amount,
