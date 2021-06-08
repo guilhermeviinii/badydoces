@@ -29,8 +29,8 @@ class _StockState extends State<Stock> {
     var produtos = repositoryProduct.products;
 
     if (itemSelecionado != null) {
-      produtosCat = repositoryProduct.products
-          .where((product) => product.category == itemSelecionado.name);
+      produtosCat = repositoryProduct.products.where(
+          (product) => product.name_category == itemSelecionado.category_name);
     }
 
     return Scaffold(
@@ -154,7 +154,7 @@ class _StockState extends State<Stock> {
         child: DropdownButton(
           value: (itemSelecionado == null)
               ? itemSelecionado
-              : itemSelecionado.name,
+              : itemSelecionado.category_name,
           hint: Text(
             'Selecione a categoria',
             style: GoogleFonts.ubuntu(
@@ -169,14 +169,14 @@ class _StockState extends State<Stock> {
           style: TextStyle(color: Colors.black, fontSize: 16),
           items: categorias.map<DropdownMenuItem<String>>((Categoria value) {
             return DropdownMenuItem<String>(
-              value: value.name,
-              child: Text(value.name),
+              value: value.category_name,
+              child: Text(value.category_name),
             );
           }).toList(),
           onChanged: (var newValue) {
             setState(() {
               itemSelecionado =
-                  categorias.firstWhere((cat) => cat.name == newValue);
+                  categorias.firstWhere((cat) => cat.category_name == newValue);
             });
           },
         ),

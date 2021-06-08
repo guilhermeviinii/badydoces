@@ -1,15 +1,15 @@
 class Categoria {
-  String name;
+  String category_name;
   String id;
 
-  Categoria({this.name, this.id});
+  Categoria({this.category_name, this.id});
 
   Categoria.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    category_name = json['category_name'];
     id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
-    return {'name': name, 'id': id};
+    return {'category_name': category_name, 'id': id};
   }
 }
