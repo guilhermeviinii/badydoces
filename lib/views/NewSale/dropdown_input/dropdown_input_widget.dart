@@ -1,3 +1,4 @@
+import 'package:badydoces/views/Stock/form_stock/stock.dart';
 import 'package:flutter/material.dart';
 
 class DropDownInputWidget extends StatefulWidget {
@@ -10,9 +11,9 @@ class DropDownInputWidget extends StatefulWidget {
   _DropDownInputWidgetState createState() => _DropDownInputWidgetState();
 }
 
-class _DropDownInputWidgetState extends State<DropDownInputWidget> {
-  String _selectedLocation;
+String _selectedLocation;
 
+class _DropDownInputWidgetState extends State<DropDownInputWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
