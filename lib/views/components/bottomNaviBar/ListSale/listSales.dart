@@ -1,6 +1,7 @@
 import 'package:badydoces/views/components/bottomNaviBar/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ListSales extends StatefulWidget {
   @override
@@ -98,8 +99,27 @@ class _ListSalesState extends State<ListSales> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Adicionar produtos'),
+        icon: Icon(Icons.add),
+        backgroundColor: Color(0xff940C0C),
+        onPressed: () {
+          abrirWhatsApp();
+        },
+      ),
       bottomNavigationBar: BottomNaviBar(),
     );
+  }
+
+  abrirWhatsApp() async {
+    var whatsappUrl =
+        "whatsapp://send?phone=+5517991986223&text=Olá,tudo bem ?";
+
+    if (await canLaunch(whatsappUrl)) {
+      await launch(whatsappUrl);
+    } else {
+      throw 'Could not launch $whatsappUrl';
+    }
   }
 
   Container dropDownCAtegoria() {

@@ -12,7 +12,7 @@ class Product {
     name = json['name'];
     price = json['price'];
     amount = json['amount'];
-    category = json['category'];
+    category = json['name_category'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,7 +21,7 @@ class Product {
       'name': name,
       'price': price,
       'amount': amount,
-      'category': category
+      'name_category': category
     };
   }
 }
