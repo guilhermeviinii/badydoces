@@ -379,5 +379,9 @@ packages:
     source: hosted
     version: "0.2.0"
 sdks:
+<<<<<<< HEAD
   dart: ">=2.12.0 <3.0.0"
+=======
+  dart: ">=2.12.0-259.9.beta <3.0.0"
+>>>>>>> nada alterado
   flutter: ">=1.22.0"
