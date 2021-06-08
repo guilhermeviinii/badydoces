@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -46,6 +47,31 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  showAlertDialog1(BuildContext context) {
+    // configura o button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {},
+    );
+
+    // configura o  AlertDialog
+    AlertDialog alerta = AlertDialog(
+      title: Text("Erro no login"),
+      content: Text("Seu email ou/e sua senha não estão correto(s)."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // exibe o dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alerta;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -54,8 +80,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
+            onChanged: (value) {
+              AuthController.instance.usuario.email = value;
+            },
             decoration: const InputDecoration(
-              labelText: 'Usuário',
+              labelText: 'Email',
               contentPadding: EdgeInsets.symmetric(horizontal: 20),
               border: OutlineInputBorder(),
             ),
@@ -69,6 +98,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           Container(
             margin: EdgeInsets.only(top: 16),
             child: TextFormField(
+              onChanged: (value) {
+                AuthController.instance.usuario.password = value;
+              },
               decoration: const InputDecoration(
                 labelText: 'Senha',
                 contentPadding: EdgeInsets.symmetric(horizontal: 20),
@@ -101,11 +133,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       shadowColor: Colors.black54,
                       elevation: 4,
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/tela_inicial');
-                      if (_formKey.currentState.validate()) {
-                        // Process data.
+                    onPressed: () async {
+                      bool isLoginSuccess =
+                          await AuthController.instance.login();
+                      if (isLoginSuccess) {
+                        Navigator.of(context).pushNamed('/tela_inicial');
+                      } else {
+                        return showAlertDialog1(context);
                       }
+
+                      // if (_formKey.currentState.validate()) {
+                      //   // Process data.
+                      // }
                     },
                     child: const Text('Entrar'),
                   ),
