@@ -3,16 +3,16 @@ class Product {
   String name;
   String price;
   int amount;
-  String name_category;
+  String category;
 
-  Product({this.id, this.name, this.price, this.amount, this.name_category});
+  Product({this.id, this.name, this.price, this.amount, this.category});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     price = json['price'];
     amount = json['amount'];
-    name_category = json['name_category'];
+    category = json['name_category'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,7 +21,7 @@ class Product {
       'name': name,
       'price': price,
       'amount': amount,
-      'name_category': name_category
+      'name_category': category
     };
   }
 }
