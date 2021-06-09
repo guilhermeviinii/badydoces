@@ -47,19 +47,6 @@ class _StockState extends State<Stock> {
             color: Colors.white,
           ),
         ),
-        actions: [
-          IconButton(
-              iconSize: 30,
-              padding: EdgeInsets.only(right: 20),
-              icon: Icon(
-                Icons.home,
-              ),
-              hoverColor: Colors.white,
-              splashColor: Colors.white,
-              highlightColor: Colors.white,
-              onPressed: () {} //=> adicionarProduto(context),
-              ),
-        ],
       ),
       body: Column(
         children: [
