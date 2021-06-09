@@ -1,6 +1,7 @@
 import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:badydoces/views/Home/home.dart';
+import 'package:badydoces/views/Home/home_controller.dart';
 import 'package:badydoces/views/Login/index.dart';
 import 'package:badydoces/views/NewSale/new_sale.dart';
 import 'package:badydoces/views/Stock/form_stock/stock.dart';
@@ -16,12 +17,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => CategoryRepository(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ProductRepository(),
-        ),
+
+        ChangeNotifierProvider<CategoryRepository>.value(
+            value: CategoryRepository()),
+        ChangeNotifierProvider<AuthController>.value(value: AuthController()),
+        ChangeNotifierProvider<HomeController>.value(value: HomeController()),
+        ChangeNotifierProvider<ProductRepository>.value(
+            value: ProductRepository()),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

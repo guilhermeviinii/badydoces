@@ -24,7 +24,7 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
 
     Product product = ModalRoute.of(context).settings.arguments;
 
-    // itemSelecionado.name = product.category;
+
     Future<bool> confirmarEdit(BuildContext context) async {
       return showDialog(
         context: context,
@@ -47,6 +47,7 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
         BuildContext context, ProductRepository repositoryP) async {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
+
         if (itemSelecionado != null) {
           product.category = itemSelecionado.name;
         }
@@ -159,7 +160,9 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
                       margin: EdgeInsets.only(right: 16),
                       child: Icon(Icons.add_circle),
                     ),
-                    Text('Salvar'),
+
+                    Text('Adicionar Produto'),
+
                   ],
                 ),
                 onPressed: () => onSave(context, repositoryP),
@@ -186,10 +189,12 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           value: (itemSelecionado == null)
-              ? itemSelecionado
+
+              ? itemSelecionado.name = product.category
               : itemSelecionado.name,
           hint: Text(
-            product.category,
+            'Selecione a categoria',
+
             style: GoogleFonts.ubuntu(
               color: Colors.black,
             ),
