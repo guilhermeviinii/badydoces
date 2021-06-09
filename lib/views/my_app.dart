@@ -1,11 +1,14 @@
 import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/repositories/produto_repository.dart';
+import 'package:badydoces/repositories/venda_produto_repository.dart';
+import 'package:badydoces/repositories/venda_repository.dart';
 import 'package:badydoces/views/Home/home.dart';
 import 'package:badydoces/views/Home/home_controller.dart';
 import 'package:badydoces/views/Login/index.dart';
 import 'package:badydoces/views/NewSale/new_sale.dart';
 import 'package:badydoces/views/Stock/form_stock/stock.dart';
 import 'package:badydoces/views/auth/AuthController.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -18,16 +21,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-
-        ChangeNotifierProvider<CategoryRepository>.value(
-            value: CategoryRepository()),
         ChangeNotifierProvider<AuthController>.value(value: AuthController()),
         ChangeNotifierProvider<HomeController>.value(value: HomeController()),
-        ChangeNotifierProvider<ProductRepository>.value(
-            value: ProductRepository()),
-
+        ChangeNotifierProvider(
+          create: (context) => CategoryRepository(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProductRepository(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SaleProductRepository(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SaleRepository(),
+        ),
       ],
       child: MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        supportedLocales: [const Locale('pt', 'BR')],
         debugShowCheckedModeBanner: false,
         routes: {
           '/': (context) => Login(),
@@ -38,7 +52,7 @@ class MyApp extends StatelessWidget {
           '/edit_product': (context) => EditProduct(),
           '/listsales': (context) => ListSales(),
         },
-        initialRoute: '/',
+        initialRoute: '/edit_product',
       ),
     );
   }

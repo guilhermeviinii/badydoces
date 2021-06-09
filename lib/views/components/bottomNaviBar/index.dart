@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class BottomNaviBar extends StatefulWidget {
+  final int indexTela;
+
+  const BottomNaviBar({Key key, this.indexTela}) : super(key: key);
   @override
   _BottomNaviBarState createState() => _BottomNaviBarState();
 }
 
-int _selectedIndex = 0;
-
 class _BottomNaviBarState extends State<BottomNaviBar> {
   @override
   Widget build(BuildContext context) {
+    int _selectedIndex = (widget.indexTela != null) ? widget.indexTela : 0;
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
