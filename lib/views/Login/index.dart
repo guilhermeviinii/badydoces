@@ -48,13 +48,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   showAlertDialog1(BuildContext context) {
-    // configura o button
+// configura o button
     Widget okButton = FlatButton(
       child: Text("OK"),
       onPressed: () {},
     );
 
-    // configura o  AlertDialog
+// configura o AlertDialog
     AlertDialog alerta = AlertDialog(
       title: Text("Erro no login"),
       content: Text("Seu email ou/e sua senha não estão correto(s)."),
@@ -63,7 +63,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ],
     );
 
-    // exibe o dialog
+// exibe o dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -142,9 +142,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         return showAlertDialog1(context);
                       }
 
-                      // if (_formKey.currentState.validate()) {
-                      //   // Process data.
-                      // }
+// if (_formKey.currentState.validate()) {
+// // Process data.
+// }
                     },
                     child: const Text('Entrar'),
                   ),

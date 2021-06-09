@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:badydoces/models/produto.model.dart';
+import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:provider/provider.dart';
 
 import 'package:badydoces/models/admin.model.dart';
@@ -7,11 +8,9 @@ import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:badydoces/views/Home/home_controller.dart';
 import 'package:badydoces/views/Home/widgets/estoque_alerta/estoque_alerta_widget.dart';
 import 'package:badydoces/views/Home/widgets/total_vendas_card/total_vendas_card_widget.dart';
-import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:badydoces/views/components/bottomNaviBar/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/bottomNaviBar/index.dart';
 
@@ -41,7 +40,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(
-          'Bady Doces logado email',
+          'Bady Doces',
           style: GoogleFonts.ubuntu(
             color: Colors.black,
           ),
