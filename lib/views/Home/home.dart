@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff71C173),
         title: Text(
           'Bady Doces',
           style: GoogleFonts.ubuntu(

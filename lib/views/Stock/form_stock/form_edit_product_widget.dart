@@ -157,9 +157,9 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
                   children: [
                     Container(
                       margin: EdgeInsets.only(right: 16),
-                      child: Icon(Icons.add_circle),
+                      child: Icon(Icons.save_outlined),
                     ),
-                    Text('Adicionar Produto'),
+                    Text('Salvar'),
                   ],
                 ),
                 onPressed: () => onSave(context, repositoryP),

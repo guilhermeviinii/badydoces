@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 
 import 'Stock/form_stock/add_products.dart';
 import 'Stock/form_stock/edit_products.dart';
+import 'components/bottomNaviBar/ListSale/form_info_sales_widget.dart';
+import 'components/bottomNaviBar/ListSale/info_sales.dart';
 import 'components/bottomNaviBar/ListSale/listSales.dart';
 
 class MyApp extends StatelessWidget {
@@ -51,6 +53,8 @@ class MyApp extends StatelessWidget {
           '/add_product': (context) => AddProduct(),
           '/edit_product': (context) => EditProduct(),
           '/listsales': (context) => ListSales(),
+          '/infosales': (context) => InfoSales(),
+          '/rota': (context) => FormInfoSalestWidget(),
         },
         initialRoute: '/',
       ),

@@ -39,7 +39,7 @@ class CategoryRepository extends ChangeNotifier {
       'https://backend-badydoces.herokuapp.com/show-category',
       headers: {
         'Content-type': '	application/json; charset=utf-8',
-        //'Authorization': "Bearer $token"
+        'Authorization': "Bearer $token"
       },
     );
     if (response.statusCode == 200) {

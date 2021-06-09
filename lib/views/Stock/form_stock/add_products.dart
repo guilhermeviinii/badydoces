@@ -17,7 +17,7 @@ class AddProduct extends StatelessWidget {
           icon: Icon(Icons.arrow_back_rounded),
           onPressed: () => Navigator.of(context).pushNamed('/estoque'),
         ),
-        backgroundColor: Color(0xff940C0C),
+        backgroundColor: Color(0xff71C173),
         title: Text(
           'Adicionar Produtos',
           style: GoogleFonts.ubuntu(

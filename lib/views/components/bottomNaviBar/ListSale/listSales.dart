@@ -10,7 +10,6 @@ class ListSales extends StatefulWidget {
   _ListSalesState createState() => _ListSalesState();
 }
 
-var lista = ['Tudo', 'Hoje', '15 Dias'];
 var lista2 = [
   'Janeiro',
   'Fevereiro',
@@ -45,7 +44,7 @@ class _ListSalesState extends State<ListSales> {
           color: Colors.black,
           opacity: .4,
         ),
-        backgroundColor: Color(0xff940C0C),
+        backgroundColor: Color(0xff71C173),
         title: Text(
           'Controle de vendas',
           style: GoogleFonts.ubuntu(
@@ -76,25 +75,24 @@ class _ListSalesState extends State<ListSales> {
                         borderRadius: BorderRadius.circular(11.36),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
+                            color: Color(0xff71C173),
                             blurRadius: 2,
                             offset: Offset(1, 3),
                           ),
                         ]),
                     child: ListTile(
-                      // onTap: () {
-                      //   Navigator.of(context).pushNamed(
-                      //     '/edit_product',
-                      //     arguments: product,
-                      //   );
-                      // },
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          '/infosales',
+                          arguments: vendas,
+                        );
+                      },
                       title: Text(
                         vendas.customer,
                         style: GoogleFonts.ubuntu(
                           color: Colors.black,
                         ),
                       ),
-
                       subtitle: Text(
                         vendas.value.toString(),
                         style: GoogleFonts.ubuntu(
@@ -108,7 +106,6 @@ class _ListSalesState extends State<ListSales> {
                             Text(
                               DateFormat("dd-MM-yyyy")
                                   .format(DateTime.parse(vendas.created_at)),
-                              //vendas.created_at.toString(),
                               style: GoogleFonts.ubuntu(
                                 color: Colors.black,
                                 fontSize: 16,
