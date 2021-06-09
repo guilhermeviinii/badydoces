@@ -29,14 +29,13 @@ class ProductRepository extends ChangeNotifier {
     var response = await http.get(
       'https://backend-badydoces.herokuapp.com/show-product',
       headers: {
-        'Content-type': '	application/json; charset=utf-8',
+        'Content-type': '	application/json; charset=UTF-8',
         'Authorization': "Bearer $token"
       },
     );
     if (response.statusCode == 200) {
       Iterable products = jsonDecode(response.body) as List;
       var lista = products.map((objeto) => Product.fromJson(objeto));
-
       this.products = lista.toList();
       notifyListeners();
     }

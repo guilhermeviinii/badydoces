@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class SaleProductRepository extends ChangeNotifier {
   List<SaleProduct> salesProducts = List<SaleProduct>();
 
-  CategoryRepository() {
+  SaleProductRepository() {
     read();
   }
 

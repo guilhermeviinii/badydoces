@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
           '/edit_product': (context) => EditProduct(),
           '/listsales': (context) => ListSales(),
         },
-        initialRoute: '/edit_product',
+        initialRoute: '/',
       ),
     );
   }
