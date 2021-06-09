@@ -19,7 +19,7 @@ class InfoSales extends StatelessWidget {
         ),
         backgroundColor: Color(0xff71C173),
         title: Text(
-          'Editar produto',
+          'Controle de vendas',
           style: GoogleFonts.ubuntu(
             color: Colors.white,
           ),

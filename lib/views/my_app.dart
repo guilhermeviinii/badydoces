@@ -54,7 +54,6 @@ class MyApp extends StatelessWidget {
           '/edit_product': (context) => EditProduct(),
           '/listsales': (context) => ListSales(),
           '/infosales': (context) => InfoSales(),
-          '/rota': (context) => FormInfoSalestWidget(),
         },
         initialRoute: '/',
       ),
