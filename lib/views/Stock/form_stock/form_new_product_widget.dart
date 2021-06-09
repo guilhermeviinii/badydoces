@@ -51,7 +51,7 @@ class _FormNewProductWidgetState extends State<FormNewProductWidget> {
         BuildContext context, ProductRepository repositoryP) async {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
-        product.category = itemSelecionado.name;
+        product.name_category = itemSelecionado.category_name;
         if (await repositoryP.create(product)) {
           confirmarAdd(context);
         } else {
@@ -193,7 +193,7 @@ class _FormNewProductWidgetState extends State<FormNewProductWidget> {
         child: DropdownButton(
           value: (itemSelecionado == null)
               ? itemSelecionado
-              : itemSelecionado.name,
+              : itemSelecionado.category_name,
           hint: Text(
             'Selecione a categoria',
             style: GoogleFonts.ubuntu(
@@ -208,14 +208,14 @@ class _FormNewProductWidgetState extends State<FormNewProductWidget> {
           style: TextStyle(color: Colors.black, fontSize: 16),
           items: categorias.map<DropdownMenuItem<String>>((Categoria value) {
             return DropdownMenuItem<String>(
-              value: value.name,
-              child: Text(value.name),
+              value: value.category_name,
+              child: Text(value.category_name),
             );
           }).toList(),
           onChanged: (var newValue) {
             setState(() {
               itemSelecionado =
-                  categorias.firstWhere((cat) => cat.name == newValue);
+                  categorias.firstWhere((cat) => cat.category_name == newValue);
             });
           },
         ),

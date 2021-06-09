@@ -1,36 +1,41 @@
 class Sale {
+  // ignore: non_constant_identifier_names
   String id_sale;
-  double value;
-  bool status;
-  DateTime date;
-  String admin_id;
+  String value;
   String customer;
+  // ignore: non_constant_identifier_names
+  String created_at;
+  bool delivered;
+  // ignore: non_constant_identifier_names
+  String admin_id;
 
-  Sale(
-      {this.id_sale,
-      this.value,
-      this.status,
-      this.date,
-      this.admin_id,
-      this.customer});
+  Sale({
+    // ignore: non_constant_identifier_names
+    this.id_sale,
+    this.value,
+    this.customer,
+    // ignore: non_constant_identifier_names
+    this.created_at,
+    this.delivered,
+    // ignore: non_constant_identifier_names
+    this.admin_id,
+  });
 
   Sale.fromJson(Map<String, dynamic> json) {
-    id_sale = json['id_sale'];
+    id_sale = json['id'];
     value = json['value'];
-    status = json['status'];
-    date = json['date'];
+    customer = json['costumer'];
+    created_at = json['created_at'];
     admin_id = json['admin_id'];
-    customer = json['customer'];
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id_sale': id_sale,
+      'id': id_sale,
       'value': value,
-      'status': status,
-      'date': date,
+      'costumer': customer,
+      'created_at': created_at,
       'admin_id': admin_id,
-      'customer': customer
     };
   }
 }

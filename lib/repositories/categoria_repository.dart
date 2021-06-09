@@ -42,19 +42,23 @@ class CategoryRepository extends ChangeNotifier {
   Future<void> delete(String name) async {
     var response = await http.delete("/$name");
     if (response.statusCode == 200) {
-      this.categorias.removeWhere((categoria) => categoria.name == name);
+      this
+          .categorias
+          .removeWhere((categoria) => categoria.category_name == name);
       notifyListeners();
     }
   }
 
   Future<void> update(Categoria categoria) async {
-    var response = await http.put("/${categoria.name}",
+    var response = await http.put("/${categoria.category_name}",
         body: jsonEncode(categoria.toJson()),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
     if (response.statusCode == 200) {
-      int index = this.categorias.indexWhere((c) => c.name == categoria.name);
+      int index = this
+          .categorias
+          .indexWhere((c) => c.category_name == categoria.category_name);
       this.categorias[index] = categoria;
       notifyListeners();
     }
