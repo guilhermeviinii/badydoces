@@ -48,7 +48,7 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         if (itemSelecionado != null) {
-          product.category = itemSelecionado.name;
+          product.name_category = itemSelecionado.category_name;
         }
 
         await repositoryP.update(product);
@@ -187,9 +187,9 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
         child: DropdownButton(
           value: (itemSelecionado == null)
               ? itemSelecionado
-              : itemSelecionado.name,
+              : itemSelecionado.category_name,
           hint: Text(
-            product.category,
+            product.name_category,
             style: GoogleFonts.ubuntu(
               color: Colors.black,
             ),
@@ -202,14 +202,14 @@ class _FormEditProductWidgetWidgetState extends State<FormEditProductWidget> {
           style: TextStyle(color: Colors.black, fontSize: 16),
           items: categorias.map<DropdownMenuItem<String>>((Categoria value) {
             return DropdownMenuItem<String>(
-              value: value.name,
-              child: Text(value.name),
+              value: value.category_name,
+              child: Text(value.category_name),
             );
           }).toList(),
           onChanged: (var newValue) {
             setState(() {
               itemSelecionado =
-                  categorias.firstWhere((cat) => cat.name == newValue);
+                  categorias.firstWhere((cat) => cat.category_name == newValue);
             });
           },
         ),

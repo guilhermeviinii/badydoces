@@ -1,20 +1,42 @@
+import 'package:badydoces/repositories/venda_repository.dart';
 import 'package:badydoces/views/components/bottomNaviBar/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ListSales extends StatefulWidget {
   @override
   _ListSalesState createState() => _ListSalesState();
 }
 
-var lista = ['Hoje', 'Tudo'];
-String selecionado = "Hoje";
-final _formKey = GlobalKey<FormState>();
+var lista = ['Tudo', 'Hoje', '15 Dias'];
+var lista2 = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro'
+];
+
+var selecionado = DateFormat("MMMM", "pt_BR").format(DateTime.now());
 
 class _ListSalesState extends State<ListSales> {
   @override
   Widget build(BuildContext context) {
+    var repositorySales = Provider.of<SaleRepository>(context, listen: true);
+    var sales = repositorySales.sales;
+    var top = selecionado.characters.first.toUpperCase();
+    selecionado =
+        selecionado.replaceFirst(selecionado.characters.first, top, 0);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -38,10 +60,12 @@ class _ListSalesState extends State<ListSales> {
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.vertical,
-              itemCount: 1,
+              itemCount: sales.length,
               itemBuilder: (_, index) {
+                var vendas = sales[index];
+
                 return Dismissible(
-                  key: _formKey,
+                  key: Key(vendas.id_sale),
                   // background: Container(
                   //   color: Colors.red,
                   // ),
@@ -65,14 +89,14 @@ class _ListSalesState extends State<ListSales> {
                       //   );
                       // },
                       title: Text(
-                        "Cliente\n",
+                        vendas.customer,
                         style: GoogleFonts.ubuntu(
                           color: Colors.black,
                         ),
                       ),
 
                       subtitle: Text(
-                        'Valor - 100,00',
+                        vendas.value.toString(),
                         style: GoogleFonts.ubuntu(
                           color: Colors.black,
                         ),
@@ -82,7 +106,9 @@ class _ListSalesState extends State<ListSales> {
                         child: Row(
                           children: [
                             Text(
-                              '12/03/1998',
+                              DateFormat("dd-MM-yyyy")
+                                  .format(DateTime.parse(vendas.created_at)),
+                              //vendas.created_at.toString(),
                               style: GoogleFonts.ubuntu(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -99,28 +125,20 @@ class _ListSalesState extends State<ListSales> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text('Adicionar produtos'),
-        icon: Icon(Icons.add),
-        backgroundColor: Color(0xff940C0C),
-        onPressed: () {
-          abrirWhatsApp();
-        },
-      ),
-      bottomNavigationBar: BottomNaviBar(),
+      bottomNavigationBar: BottomNaviBar(indexTela: 3),
     );
   }
 
-  abrirWhatsApp() async {
-    var whatsappUrl =
-        "whatsapp://send?phone=+5517991986223&text=Olá,tudo bem ?";
-
-    if (await canLaunch(whatsappUrl)) {
-      await launch(whatsappUrl);
-    } else {
-      throw 'Could not launch $whatsappUrl';
-    }
-  }
+//   abrirWhatsApp() async {
+//     var whatsappUrl =
+//         "whatsapp://send?phone=+5517991986223&text=Olá,tudo bem ?";
+//
+//     if (await canLaunch(whatsappUrl)) {
+//       await launch(whatsappUrl);
+//     } else {
+//       throw 'Could not launch $whatsappUrl';
+//     }
+//   }
 
   Container dropDownCAtegoria() {
     return Container(
@@ -145,7 +163,7 @@ class _ListSalesState extends State<ListSales> {
           ),
           isExpanded: true,
           style: TextStyle(color: Colors.black, fontSize: 16),
-          items: lista.map<DropdownMenuItem<String>>((String value) {
+          items: lista2.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),

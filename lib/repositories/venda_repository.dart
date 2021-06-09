@@ -28,7 +28,8 @@ class SaleRepository extends ChangeNotifier {
   }
 
   Future<void> read() async {
-    var response = await http.get('');
+    var response =
+        await http.get('https://backend-badydoces.herokuapp.com/show-sales');
     if (response.statusCode == 200) {
       Iterable sales = jsonDecode(response.body) as List;
       var lista = sales.map((objeto) => Sale.fromJson(objeto));

@@ -1,9 +1,12 @@
 import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/repositories/produto_repository.dart';
+import 'package:badydoces/repositories/venda_produto_repository.dart';
+import 'package:badydoces/repositories/venda_repository.dart';
 import 'package:badydoces/views/Home/home.dart';
 import 'package:badydoces/views/Login/index.dart';
 import 'package:badydoces/views/NewSale/new_sale.dart';
 import 'package:badydoces/views/Stock/form_stock/stock.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +25,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ProductRepository(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => SaleProductRepository(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SaleRepository(),
+        ),
       ],
       child: MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        supportedLocales: [const Locale('pt', 'BR')],
         debugShowCheckedModeBanner: false,
         routes: {
           '/': (context) => Login(),
