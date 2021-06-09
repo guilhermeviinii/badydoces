@@ -1,6 +1,7 @@
 import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:badydoces/views/Home/home.dart';
+import 'package:badydoces/views/Home/home_controller.dart';
 import 'package:badydoces/views/Login/index.dart';
 import 'package:badydoces/views/NewSale/new_sale.dart';
 import 'package:badydoces/views/Stock/form_stock/stock.dart';
@@ -8,18 +9,18 @@ import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import 'Stock/form_stock/add_products.dart';
-import 'Stock/form_stock/edit_products.dart';
-import 'components/bottomNaviBar/ListSale/listSales.dart';
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) {
-        CategoryRepository();
-        AuthController();
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CategoryRepository>.value(
+            value: CategoryRepository()),
+        ChangeNotifierProvider<AuthController>.value(value: AuthController()),
+        ChangeNotifierProvider<HomeController>.value(value: HomeController()),
+        ChangeNotifierProvider<ProductRepository>.value(
+            value: ProductRepository()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
@@ -27,11 +28,8 @@ class MyApp extends StatelessWidget {
           '/tela_inicial': (context) => Home(),
           '/nova_venda': (context) => NewSale(),
           '/estoque': (context) => Stock(),
-          '/add_product': (context) => AddProduct(),
-          '/edit_product': (context) => EditProduct(),
-          '/listsales': (context) => ListSales(),
         },
-        initialRoute: '/edit_product',
+        initialRoute: '/',
       ),
     );
   }
