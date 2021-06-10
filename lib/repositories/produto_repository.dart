@@ -1,5 +1,6 @@
 import 'package:badydoces/models/admin.model.dart';
 import 'package:badydoces/models/produto.model.dart';
+import 'package:badydoces/views/NewSale/new_sale_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -36,22 +37,46 @@ class ProductRepository extends ChangeNotifier {
   }
 
   Future<void> read() async {
-    final SharedPreferences prefs = await _prefs;
-    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
-    var token = usuario.token;
-    var response = await http.get(
-      'https://backend-badydoces.herokuapp.com/show-product',
-      headers: {
-        'Content-type': '	application/json; charset=UTF-8',
-        'Authorization': "Bearer $token"
-      },
-    );
-    if (response.statusCode == 200) {
-      Iterable products = jsonDecode(response.body) as List;
-      var lista = products.map((objeto) => Product.fromJson(objeto));
-      this.products = lista.toList();
-      notifyListeners();
-    }
+    try {
+      final SharedPreferences prefs = await _prefs;
+      Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      var token = usuario.token;
+      var response = await http.get(
+        'https://backend-badydoces.herokuapp.com/show-product',
+        headers: {
+          'Content-type': '	application/json; charset=UTF-8',
+          'Authorization': "Bearer $token"
+        },
+      );
+      if (response.statusCode == 200) {
+        Iterable products = jsonDecode(response.body) as List;
+        var lista = products.map((objeto) => Product.fromJson(objeto));
+        this.products = lista.toList();
+
+        notifyListeners();
+      }
+    } catch (erro) {}
+  }
+
+  Future<void> fetchProductByCategory(String category) async {
+    try {
+      final SharedPreferences prefs = await _prefs;
+      Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      var token = usuario.token;
+      var response = await http.get(
+        'https://backend-badydoces.herokuapp.com/show-product-category/$category',
+        headers: {
+          'Content-type': '	application/json; charset=UTF-8',
+          'Authorization': "Bearer $token"
+        },
+      );
+      if (response.statusCode == 200) {
+        Iterable products = jsonDecode(response.body) as List;
+        var lista = products.map((objeto) => Product.fromJson(objeto));
+        this.products = lista.toList();
+        notifyListeners();
+      }
+    } catch (erro) {}
   }
 
   Future<void> delete(String id) async {

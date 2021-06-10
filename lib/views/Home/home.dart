@@ -31,6 +31,7 @@ class _HomeState extends State<Home> {
 
   Widget build(BuildContext context) {
     HomeController _homeController = Provider.of<HomeController>(context);
+    print(_homeController.products);
     AuthController _authController = Provider.of<AuthController>(context);
 
     List<Product> prodcuts = _homeController.products;
