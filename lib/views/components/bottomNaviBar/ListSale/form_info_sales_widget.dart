@@ -55,7 +55,7 @@ class _FormInfoSalestWidgetWidgetState extends State<FormInfoSalestWidget> {
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: TextFormField(
                 enabled: false,
-                initialValue: vendas.customer,
+                initialValue: vendas.costumer,
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: Color(0xFF4360F6)),
                     labelText: 'Nome do cliente',
@@ -101,7 +101,7 @@ class _FormInfoSalestWidgetWidgetState extends State<FormInfoSalestWidget> {
                     child: TextFormField(
                       enabled: false,
                       initialValue: DateFormat("dd-MM-yyyy")
-                          .format(DateTime.parse(vendas.created_at)),
+                          .format(DateTime.parse(vendas.createdAt)),
                       decoration: InputDecoration(
                           labelText: 'Data',
                           border: OutlineInputBorder(

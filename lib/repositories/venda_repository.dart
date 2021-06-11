@@ -62,7 +62,7 @@ class SaleRepository extends ChangeNotifier {
       'Authorization': "Bearer $token"
     });
     if (response.statusCode == 200) {
-      this.sales.removeWhere((sale) => sale.id_sale == id);
+      this.sales.removeWhere((sale) => sale.idSale == id);
       notifyListeners();
     }
   }
@@ -71,14 +71,14 @@ class SaleRepository extends ChangeNotifier {
     final SharedPreferences prefs = await _prefs;
     Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
     var token = usuario.token;
-    var response = await http.put("/${sale.id_sale}",
+    var response = await http.put("/${sale.idSale}",
         body: jsonEncode(sale.toJson()),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': "Bearer $token"
         });
     if (response.statusCode == 200) {
-      int index = this.sales.indexWhere((s) => s.id_sale == sale.id_sale);
+      int index = this.sales.indexWhere((s) => s.idSale == sale.idSale);
       this.sales[index] = sale;
       notifyListeners();
     }

@@ -1,41 +1,40 @@
-class Sale {
-  // ignore: non_constant_identifier_names
-  String id_sale;
-  String value;
-  String customer;
-  // ignore: non_constant_identifier_names
-  String created_at;
-  bool delivered;
-  // ignore: non_constant_identifier_names
-  String admin_id;
+import 'package:badydoces/models/produto.model.dart';
 
-  Sale({
-    // ignore: non_constant_identifier_names
-    this.id_sale,
-    this.value,
-    this.customer,
-    // ignore: non_constant_identifier_names
-    this.created_at,
-    this.delivered,
-    // ignore: non_constant_identifier_names
-    this.admin_id,
-  });
+class Sale {
+  String idSale;
+  String adminId;
+  String costumer;
+  String value;
+
+  String createdAt;
+  List<Product> idProduct;
+
+  Sale({this.idSale, this.adminId, this.costumer, this.value, this.idProduct});
 
   Sale.fromJson(Map<String, dynamic> json) {
-    id_sale = json['id'];
+    idSale = json['id_sale'];
+    adminId = json['admin_id'];
+    costumer = json['costumer'];
     value = json['value'];
-    customer = json['costumer'];
-    created_at = json['created_at'];
-    admin_id = json['admin_id'];
+    createdAt = json['created_at'];
+    if (json['id_product'] != null) {
+      idProduct = <Product>[];
+      json['id_product'].forEach((v) {
+        idProduct.add(new Product.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id_sale,
-      'value': value,
-      'costumer': customer,
-      'created_at': created_at,
-      'admin_id': admin_id,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id_sale'] = this.idSale;
+    data['admin_id'] = this.adminId;
+    data['costumer'] = this.costumer;
+    data['value'] = this.value;
+    data['created_at'] = this.createdAt;
+    if (this.idProduct != null) {
+      data['id_product'] = this.idProduct.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }

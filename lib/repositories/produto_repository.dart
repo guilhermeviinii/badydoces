@@ -58,7 +58,7 @@ class ProductRepository extends ChangeNotifier {
     } catch (erro) {}
   }
 
-  Future<void> fetchProductByCategory(String category) async {
+  Future<List<Product>> fetchProductByCategory(String category) async {
     try {
       final SharedPreferences prefs = await _prefs;
       Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
@@ -75,6 +75,7 @@ class ProductRepository extends ChangeNotifier {
         var lista = products.map((objeto) => Product.fromJson(objeto));
         this.products = lista.toList();
         notifyListeners();
+        return this.products;
       }
     } catch (erro) {}
   }

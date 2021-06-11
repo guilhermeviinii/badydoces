@@ -1,11 +1,8 @@
 import 'dart:html';
 
-import 'package:badydoces/models/categoria.model.dart';
-import 'package:badydoces/models/produto.model.dart';
-import 'package:badydoces/repositories/categoria_repository.dart';
-import 'package:badydoces/repositories/produto_repository.dart';
-import 'package:badydoces/views/NewSale/dropdown_input/dropdown_input_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:badydoces/models/venda.model.dart';
+import 'package:badydoces/views/NewSale/widgets/dropdown_category_widget/dropdown_category_widget.dart';
+import 'package:badydoces/views/NewSale/widgets/dropdown_product_widget/dropdown_product_widget.dart';
 import 'package:flutter/material.dart';
 
 class FormNewSaleWidget extends StatefulWidget {
@@ -20,17 +17,11 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+  Sale fieldsNewSale = Sale();
+  String selectedCategory;
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
-    CategoryRepository _repoCategory =
-        Provider.of<CategoryRepository>(context, listen: true);
-    ProductRepository _repoProduct =
-        Provider.of<ProductRepository>(context, listen: true);
-    List<Categoria> categorias = _repoCategory.categorias;
-    List<Product> products = _repoProduct.products;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       child: Form(
@@ -41,6 +32,9 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
             Container(
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: TextFormField(
+                onChanged: (value) {
+                  fieldsNewSale.costumer = value;
+                },
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: Color(0xFF4360F6)),
                     labelText: 'Cliente',
@@ -64,10 +58,8 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
               decoration: BoxDecoration(),
               margin: EdgeInsets.only(top: 16),
               width: double.infinity,
-              child: DropDownInputWidget(
-                list: categorias,
-                model: 'category',
-                label: 'Selecione uma categoria',
+              child: DropDownCategoryWidget(
+                selectedCategory: selectedCategory,
               ),
             ),
 
@@ -79,11 +71,7 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                     decoration: BoxDecoration(),
                     margin: EdgeInsets.only(top: 16),
                     width: double.infinity,
-                    child: DropDownInputWidget(
-                      list: products,
-                      model: 'product',
-                      label: 'Selecione um produto',
-                    ),
+                    // child: DropDownProductWidget(),
                   ),
                 ),
                 Flexible(
