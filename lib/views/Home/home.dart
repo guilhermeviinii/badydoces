@@ -23,6 +23,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthController _authController = Provider.of<AuthController>(context);
     _authController.autenticar();
+
+    Widget loading = Center(
+      child: CircularProgressIndicator(),
+    );
     if (_authController.isLogged == false) {
       Navigator.of(context).pushNamed('/');
     }
@@ -40,44 +44,53 @@ class Home extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: 129,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("images/candy.jpg"),
-                    fit: BoxFit.cover,
-                  ),
+      body: _authController.loading && _authController.isLogged == false
+          ? loading
+          : Column(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 129,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("images/candy.jpg"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Align(
+                        alignment: Alignment(-0.9, -0.8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: 32,
+                            ),
+                            TotalVendasCardWidget(),
+                            EstoqueAlertaWidget(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment(-0.9, -0.8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TotalVendasCardWidget(),
-                      EstoqueAlertaWidget(),
-                    ],
-                  ),
+                SizedBox(
+                  height: 80,
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 80,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: CardLatestSalesWidget(),
-          )
-        ],
-      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: CardLatestSalesWidget(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: CardLatestSalesWidget(),
+                )
+              ],
+            ),
       bottomNavigationBar: BottomNaviBar(),
     );
   }

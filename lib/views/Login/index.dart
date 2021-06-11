@@ -136,8 +136,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       elevation: 4,
                     ),
                     onPressed: () async {
-                      bool isLoginSuccess = await _authController.login();
-                      if (isLoginSuccess) {
+                      _authController.login();
+
+                      if (_authController.isLogged == true) {
                         Navigator.of(context).pushNamed('/tela_inicial');
                       } else {
                         return showAlertDialog1(context);
