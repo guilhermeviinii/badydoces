@@ -1,3 +1,4 @@
+import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/views/NewSale/new_sale_controller.dart';
 import 'package:badydoces/views/components/bottomNaviBar/index.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'widgets/form_new_sale/form_new_sale_widget.dart';
 class NewSale extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var newSale = Provider.of<NewSaleController>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

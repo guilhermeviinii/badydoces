@@ -24,7 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthController>.value(value: AuthController()),
+        ChangeNotifierProvider<AuthController>.value(
+          value: AuthController(),
+        ),
         ChangeNotifierProvider<HomeController>.value(value: HomeController()),
         ChangeNotifierProvider(
           create: (context) => NewSaleController(),

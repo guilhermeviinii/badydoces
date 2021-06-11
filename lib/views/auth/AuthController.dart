@@ -8,13 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends ChangeNotifier {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  static AuthController instance = AuthController();
   final AdminRepository repository = AdminRepository();
 
-  Admin usuario = new Admin();
+  Admin usuario = Admin();
+  Admin get user => usuario;
+  bool isLogged;
 
   Future<bool> login() async {
-    bool isLogged = false;
+    isLogged = false;
     repository.admin = usuario;
     isLogged = await repository.login();
     notifyListeners();
@@ -22,10 +23,14 @@ class AuthController extends ChangeNotifier {
   }
 
   Future<Admin> autenticar() async {
-    final SharedPreferences prefs = await _prefs;
+    try {
+      final SharedPreferences prefs = await _prefs;
 
-    usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      isLogged = true;
+    } catch (err) {
+      isLogged = false;
+    }
     notifyListeners();
-    return usuario;
   }
 }

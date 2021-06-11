@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryRepository extends ChangeNotifier {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  List<Categoria> categorias = List<Categoria>();
+  List<Categoria> categorias = <Categoria>[];
 
   CategoryRepository() {
     read();

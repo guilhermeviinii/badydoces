@@ -1,9 +1,12 @@
 import 'dart:html';
 
 import 'package:badydoces/models/venda.model.dart';
+import 'package:badydoces/repositories/categoria_repository.dart';
+import 'package:badydoces/views/NewSale/new_sale_controller.dart';
 import 'package:badydoces/views/NewSale/widgets/dropdown_category_widget/dropdown_category_widget.dart';
 import 'package:badydoces/views/NewSale/widgets/dropdown_product_widget/dropdown_product_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FormNewSaleWidget extends StatefulWidget {
   @override
@@ -17,11 +20,12 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-  Sale fieldsNewSale = Sale();
   String selectedCategory;
+  NewSaleController controller = NewSaleController();
 
   @override
   Widget build(BuildContext context) {
+    CategoryRepository _repoCategory = Provider.of<CategoryRepository>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       child: Form(
@@ -33,7 +37,7 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: TextFormField(
                 onChanged: (value) {
-                  fieldsNewSale.costumer = value;
+                  controller.fieldsNewSale.costumer = value;
                 },
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: Color(0xFF4360F6)),
@@ -59,8 +63,8 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
               margin: EdgeInsets.only(top: 16),
               width: double.infinity,
               child: DropDownCategoryWidget(
-                selectedCategory: selectedCategory,
-              ),
+                  selectedCategory: selectedCategory,
+                  items: _repoCategory.categorias),
             ),
 
             Row(
