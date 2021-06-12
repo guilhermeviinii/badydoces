@@ -6,6 +6,7 @@ import 'package:badydoces/views/Home/home.dart';
 import 'package:badydoces/views/Home/home_controller.dart';
 import 'package:badydoces/views/Login/index.dart';
 import 'package:badydoces/views/NewSale/new_sale.dart';
+import 'package:badydoces/views/NewSale/new_sale_controller.dart';
 import 'package:badydoces/views/Stock/form_stock/stock.dart';
 import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,6 +15,8 @@ import 'package:flutter/material.dart';
 
 import 'Stock/form_stock/add_products.dart';
 import 'Stock/form_stock/edit_products.dart';
+import 'components/bottomNaviBar/ListSale/form_info_sales_widget.dart';
+import 'components/bottomNaviBar/ListSale/info_sales.dart';
 import 'components/bottomNaviBar/ListSale/listSales.dart';
 
 class MyApp extends StatelessWidget {
@@ -21,8 +24,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthController>.value(value: AuthController()),
+        ChangeNotifierProvider<AuthController>.value(
+          value: AuthController(),
+        ),
         ChangeNotifierProvider<HomeController>.value(value: HomeController()),
+        ChangeNotifierProvider(
+          create: (context) => NewSaleController(),
+        ),
         ChangeNotifierProvider(
           create: (context) => CategoryRepository(),
         ),
@@ -51,8 +59,9 @@ class MyApp extends StatelessWidget {
           '/add_product': (context) => AddProduct(),
           '/edit_product': (context) => EditProduct(),
           '/listsales': (context) => ListSales(),
+          '/infosales': (context) => InfoSales(),
         },
-        initialRoute: '/edit_product',
+        initialRoute: '/',
       ),
     );
   }

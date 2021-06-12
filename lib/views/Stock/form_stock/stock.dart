@@ -39,7 +39,7 @@ class _StockState extends State<Stock> {
           color: Colors.black,
           opacity: .4,
         ),
-        backgroundColor: Color(0xff940C0C),
+        backgroundColor: Color(0xff71C173),
         title: Text(
           'Estoque',
           style: GoogleFonts.ubuntu(
@@ -79,7 +79,7 @@ class _StockState extends State<Stock> {
                       borderRadius: BorderRadius.circular(11.36),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
+                          color: Color(0xff71C173),
                           blurRadius: 2,
                           offset: Offset(1, 3),
                         ),
@@ -127,7 +127,7 @@ class _StockState extends State<Stock> {
       floatingActionButton: FloatingActionButton.extended(
         label: Text('Adicionar produtos'),
         icon: Icon(Icons.add),
-        backgroundColor: Color(0xff940C0C),
+        backgroundColor: Color(0xff71C173),
         onPressed: () => Navigator.of(context).pushNamed('/add_product'),
       ),
       bottomNavigationBar: BottomNaviBar(indexTela: 2),

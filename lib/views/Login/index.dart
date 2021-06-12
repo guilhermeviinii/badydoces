@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -74,6 +75,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    AuthController _authController = Provider.of<AuthController>(context);
     return Form(
       key: _formKey,
       child: Column(
@@ -81,7 +83,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         children: <Widget>[
           TextFormField(
             onChanged: (value) {
-              AuthController.instance.usuario.email = value;
+              _authController.usuario.email = value;
             },
             decoration: const InputDecoration(
               labelText: 'Email',
@@ -99,7 +101,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             margin: EdgeInsets.only(top: 16),
             child: TextFormField(
               onChanged: (value) {
-                AuthController.instance.usuario.password = value;
+                _authController.usuario.password = value;
               },
               decoration: const InputDecoration(
                 labelText: 'Senha',
@@ -109,7 +111,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               obscureText: true,
               keyboardType: TextInputType.text,
               validator: (String value) {
-                print(value);
                 if (value == null || value.isEmpty) {
                   return 'Por favor, insira sua senha';
                 }
@@ -134,9 +135,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       elevation: 4,
                     ),
                     onPressed: () async {
-                      bool isLoginSuccess =
-                          await AuthController.instance.login();
-                      if (isLoginSuccess) {
+                      _authController.login();
+
+                      if (_authController.isLoggedUser == true) {
                         Navigator.of(context).pushNamed('/tela_inicial');
                       } else {
                         return showAlertDialog1(context);

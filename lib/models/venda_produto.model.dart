@@ -3,6 +3,7 @@ class SaleProduct {
   String product_id;
   int amount;
   double value;
+  
 
   SaleProduct({this.sale_id, this.product_id, this.amount, this.value});
 

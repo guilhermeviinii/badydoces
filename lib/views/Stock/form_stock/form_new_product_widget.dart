@@ -2,7 +2,6 @@ import 'package:badydoces/models/categoria.model.dart';
 import 'package:badydoces/models/produto.model.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/repositories/produto_repository.dart';
-import 'package:badydoces/views/NewSale/dropdown_input/dropdown_input_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';

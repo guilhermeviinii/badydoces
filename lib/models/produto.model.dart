@@ -3,8 +3,10 @@ class Product {
   String name;
   String price;
   int amount;
+  // ignore: non_constant_identifier_names
   String name_category;
 
+  // ignore: non_constant_identifier_names
   Product({this.id, this.name, this.price, this.amount, this.name_category});
 
   Product.fromJson(Map<String, dynamic> json) {

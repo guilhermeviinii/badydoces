@@ -16,7 +16,7 @@ class HomeController extends ChangeNotifier {
   Future<void> fetchProducts() async {
     final SharedPreferences prefs = await _prefs;
     Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
-    await repository.read(usuario.token);
+    await repository.read();
     products = repository.products;
     products.map((e) => print(e.name));
     notifyListeners();
