@@ -1,8 +1,13 @@
+import 'package:badydoces/models/venda.model.dart';
+import 'package:badydoces/repositories/venda_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CardLatestSalesWidget extends StatelessWidget {
-  const CardLatestSalesWidget({Key key}) : super(key: key);
+  final Sale items;
+
+  const CardLatestSalesWidget({Key key, this.items}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +19,56 @@ class CardLatestSalesWidget extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Últimas vendas realizada',
-                  style: GoogleFonts.ubuntu(fontSize: 20),
+                  'Última venda realizada',
+                  style: GoogleFonts.ubuntu(
+                    fontSize: 20,
+                  ),
                 )
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Consumer<SaleRepository>(builder: (context, saleRepo, child) {
+                  if (saleRepo.sales.length < 1) {
+                    return CircularProgressIndicator();
+                  }
+                  List<Widget> items = [];
+                  saleRepo.sales.forEach((e) {
+                    items.add(Container(
+                      padding: EdgeInsets.all(16),
+                      child: Card(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [Text('Cliente: ${e.costumer}')],
+                            ),
+                            Row(
+                              children: [Text('Data da venda: ${e.createdAt}')],
+                            ),
+                            Row(
+                              children: [Text('Valor total: ${e.value}')],
+                            )
+                          ],
+                        ),
+                      ),
+                    ));
+                  });
+                  return items[1];
+                }),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/listsales');
+                    },
+                    child: Text('Ver todas as vendas'))
               ],
             )
           ],

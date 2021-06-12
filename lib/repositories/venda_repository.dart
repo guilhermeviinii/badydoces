@@ -35,22 +35,24 @@ class SaleRepository extends ChangeNotifier {
   }
 
   Future<void> read() async {
-    final SharedPreferences prefs = await _prefs;
-    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
-    var token = usuario.token;
-    var response = await http.get(
-      'https://backend-badydoces.herokuapp.com/show-sales',
-      headers: {
-        'Content-type': '	application/json; charset=UTF-8',
-        'Authorization': "Bearer $token"
-      },
-    );
-    if (response.statusCode == 200) {
-      Iterable sales = jsonDecode(response.body) as List;
-      var lista = sales.map((objeto) => Sale.fromJson(objeto));
-      this.sales = lista.toList();
-      notifyListeners();
-    }
+    try {
+      final SharedPreferences prefs = await _prefs;
+      Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      var token = usuario.token;
+      var response = await http.get(
+        'https://backend-badydoces.herokuapp.com/show-sales',
+        headers: {
+          'Content-type': '	application/json; charset=UTF-8',
+          'Authorization': "Bearer $token"
+        },
+      );
+      if (response.statusCode == 200) {
+        Iterable sales = jsonDecode(response.body) as List;
+        var lista = sales.map((objeto) => Sale.fromJson(objeto));
+        this.sales = lista.toList();
+        notifyListeners();
+      }
+    } catch (err) {}
   }
 
   Future<void> delete(int id) async {

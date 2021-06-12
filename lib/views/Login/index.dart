@@ -111,7 +111,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               obscureText: true,
               keyboardType: TextInputType.text,
               validator: (String value) {
-                print(value);
                 if (value == null || value.isEmpty) {
                   return 'Por favor, insira sua senha';
                 }
@@ -138,7 +137,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     onPressed: () async {
                       _authController.login();
 
-                      if (_authController.isLogged == true) {
+                      if (_authController.isLoggedUser == true) {
                         Navigator.of(context).pushNamed('/tela_inicial');
                       } else {
                         return showAlertDialog1(context);

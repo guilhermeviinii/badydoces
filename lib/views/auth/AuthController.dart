@@ -13,19 +13,16 @@ class AuthController extends ChangeNotifier {
   Admin usuario = Admin();
   Admin get user => usuario;
   bool isLogged;
-  bool loading;
+  bool get isLoggedUser => isLogged;
 
   Future<bool> login() async {
-    loading = true;
     repository.admin = usuario;
     isLogged = await repository.login();
-    loading = false;
     notifyListeners();
     return isLogged;
   }
 
   Future<Admin> autenticar() async {
-    loading = true;
     try {
       final SharedPreferences prefs = await _prefs;
 
@@ -34,7 +31,6 @@ class AuthController extends ChangeNotifier {
     } catch (err) {
       isLogged = false;
     }
-    loading = false;
     notifyListeners();
   }
 }
