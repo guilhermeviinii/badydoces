@@ -6,6 +6,7 @@ import 'package:badydoces/views/Home/home.dart';
 import 'package:badydoces/views/Home/home_controller.dart';
 import 'package:badydoces/views/Login/index.dart';
 import 'package:badydoces/views/NewSale/new_sale.dart';
+import 'package:badydoces/views/NewSale/new_sale_controller.dart';
 import 'package:badydoces/views/Stock/form_stock/stock.dart';
 import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -23,8 +24,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthController>.value(value: AuthController()),
+        ChangeNotifierProvider<AuthController>.value(
+          value: AuthController(),
+        ),
         ChangeNotifierProvider<HomeController>.value(value: HomeController()),
+        ChangeNotifierProvider(
+          create: (context) => NewSaleController(),
+        ),
         ChangeNotifierProvider(
           create: (context) => CategoryRepository(),
         ),

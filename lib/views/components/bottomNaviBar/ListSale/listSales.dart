@@ -64,7 +64,7 @@ class _ListSalesState extends State<ListSales> {
                 var vendas = sales[index];
 
                 return Dismissible(
-                  key: Key(vendas.id_sale),
+                  key: Key(vendas.costumer),
                   // background: Container(
                   //   color: Colors.red,
                   // ),
@@ -88,7 +88,7 @@ class _ListSalesState extends State<ListSales> {
                         );
                       },
                       title: Text(
-                        vendas.customer,
+                        vendas.costumer,
                         style: GoogleFonts.ubuntu(
                           color: Colors.black,
                         ),
@@ -105,7 +105,7 @@ class _ListSalesState extends State<ListSales> {
                           children: [
                             Text(
                               DateFormat("dd-MM-yyyy")
-                                  .format(DateTime.parse(vendas.created_at)),
+                                  .format(DateTime.parse(vendas.createdAt)),
                               style: GoogleFonts.ubuntu(
                                 color: Colors.black,
                                 fontSize: 16,
