@@ -2,6 +2,7 @@ import 'package:badydoces/models/venda.model.dart';
 import 'package:badydoces/repositories/venda_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CardLatestSalesWidget extends StatelessWidget {
@@ -47,7 +48,10 @@ class CardLatestSalesWidget extends StatelessWidget {
                               children: [Text('Cliente: ${e.costumer}')],
                             ),
                             Row(
-                              children: [Text('Data da venda: ${e.createdAt}')],
+                              children: [
+                                Text(DateFormat("'Data da venda:'  dd/MM/yyyy")
+                                    .format(DateTime.tryParse(e.createdAt)))
+                              ],
                             ),
                             Row(
                               children: [Text('Valor total: ${e.value}')],

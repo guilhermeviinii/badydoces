@@ -9,8 +9,6 @@ class AdminRepository extends ChangeNotifier {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   Admin admin = Admin();
 
-  AdminRepository() {}
-
   Future<bool> login() async {
     var url = Uri.parse('https://backend-badydoces.herokuapp.com/session');
     var response = await http.post(
@@ -21,7 +19,7 @@ class AdminRepository extends ChangeNotifier {
     if (response.statusCode == 200) {
       final SharedPreferences prefs = await _prefs;
       final Admin user = Admin.fromJson(jsonDecode(response.body));
-      await prefs.setString(
+      prefs.setString(
         "user",
         user.toString(),
       );
