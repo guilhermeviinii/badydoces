@@ -65,6 +65,13 @@ class _ListSalesState extends State<ListSales> {
 
                 return Dismissible(
                   key: Key(vendas.costumer),
+                  onDismissed: (direction) {
+                    repositorySales.delete(vendas.idSale);
+                  },
+                  confirmDismiss: (direction) {
+                    return confirmarExclusao(context);
+                  },
+
                   // background: Container(
                   //   color: Colors.red,
                   // ),
@@ -173,6 +180,32 @@ class _ListSalesState extends State<ListSales> {
           },
         ),
       ),
+    );
+  }
+
+  Future<bool> confirmarExclusao(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("Venda excluida"),
+          actions: [
+            FlatButton(
+              child: Text("Ok"),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            // FlatButton(
+            //   child: Text("Cancelar"),
+            //   onPressed: () {
+            //     Navigator.of(context).pop(false);
+            //   },
+            // ),
+          ],
+        );
+      },
     );
   }
 }

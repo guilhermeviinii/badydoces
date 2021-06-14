@@ -18,13 +18,6 @@ class SaleRepository extends ChangeNotifier {
     Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
     var token = usuario.token;
     sale.adminId = usuario.id;
-    sale.idProduct.forEach((element) {
-      print(element.id);
-      print(element.amount);
-      print(element.price.toString());
-    });
-    var body = jsonEncode(sale.toJson());
-    print(body);
 
     var response = await http.post(
       'https://backend-badydoces.herokuapp.com/new-sale',
@@ -50,7 +43,7 @@ class SaleRepository extends ChangeNotifier {
       Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
       var token = usuario.token;
       var response = await http.get(
-        'https://backend-badydoces.herokuapp.com/show-sales',
+        'https://backend-badydoces.herokuapp.com/show-order-sales',
         headers: {
           'Content-type': '	application/json; charset=UTF-8',
           'Authorization': "Bearer $token"
@@ -65,17 +58,21 @@ class SaleRepository extends ChangeNotifier {
     } catch (err) {}
   }
 
-  Future<void> delete(int id) async {
+  Future<void> delete(String id) async {
     final SharedPreferences prefs = await _prefs;
     Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
     var token = usuario.token;
-    var response = await http.delete("/$id", headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': "Bearer $token"
-    });
+    var response = await http.delete(
+        "https://backend-badydoces.herokuapp.com/delete-sale/$id",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer $token"
+        });
     if (response.statusCode == 200) {
       this.sales.removeWhere((sale) => sale.idSale == id);
       notifyListeners();
+    } else {
+      print(response.body);
     }
   }
 

@@ -85,7 +85,7 @@ class NewSale extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNaviBar(),
+      bottomNavigationBar: BottomNaviBar(indexTela: 1),
     );
   }
 }

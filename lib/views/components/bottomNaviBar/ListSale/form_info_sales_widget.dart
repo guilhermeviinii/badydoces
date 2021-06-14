@@ -30,7 +30,11 @@ class _FormInfoSalestWidgetWidgetState extends State<FormInfoSalestWidget> {
     var itens = repositorySP.salesProducts;
     final _formKey = GlobalKey<FormState>();
     List<Product> produtosCat;
-    
+
+    for (var i in repositorySale.sales) {
+      print(i.idProduct);
+    }
+
 //     index = vendas.id_sale;
 //     repositorySP.salesProducts.forEach((sale) {
 //       repositoryProduto.products.forEach((salesProducts) {
@@ -117,69 +121,69 @@ class _FormInfoSalestWidgetWidgetState extends State<FormInfoSalestWidget> {
               ],
             ),
             Divider(),
-//             Expanded(
-//               child: ListView.builder(
-//                 scrollDirection: Axis.vertical,
-//                 itemCount: produtosCat.length,
-//                 itemBuilder: (_, index) {
-//                   var product = produtosCat.toList()[index];
-//
-//                   return Dismissible(
-//                     key: Key(product.id),
-//                     background: Container(
-//                       color: Colors.red,
-//                     ),
-//                     child: Container(
-//                       margin: EdgeInsets.only(left: 30, right: 30, top: 10),
-//                       decoration: BoxDecoration(
-//                           color: Colors.white,
-//                           borderRadius: BorderRadius.circular(11.36),
-//                           boxShadow: [
-//                             BoxShadow(
-//                               color: Color(0xff71C173),
-//                               blurRadius: 2,
-//                               offset: Offset(1, 3),
-//                             ),
-//                           ]),
-//                       child: ListTile(
-//                         onTap: () {
-//                           Navigator.of(context).pushNamed(
-//                             '/edit_product',
-//                             arguments: product,
-//                           );
-//                         },
-//                         title: Text(
-//                           product.name,
-//                           style: GoogleFonts.ubuntu(
-//                             color: Colors.black,
-//                           ),
-//                         ),
-//                         subtitle: Text(
-//                           product.price.toString(),
-//                           style: GoogleFonts.ubuntu(
-//                             color: Colors.black,
-//                           ),
-//                         ),
-//                         trailing: Container(
-//                           width: 20,
-//                           child: Row(
-//                             children: [
-//                               Text(
-//                                 product.amount.toString(),
-//                                 style: GoogleFonts.ubuntu(
-//                                   color: Colors.black,
-//                                   fontSize: 16,
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: produtosCat.length,
+                itemBuilder: (_, index) {
+                  var product = produtosCat.toList()[index];
+
+                  return Dismissible(
+                    key: Key(product.id),
+                    background: Container(
+                      color: Colors.red,
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 30, right: 30, top: 10),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(11.36),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xff71C173),
+                              blurRadius: 2,
+                              offset: Offset(1, 3),
+                            ),
+                          ]),
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            '/edit_product',
+                            arguments: product,
+                          );
+                        },
+                        title: Text(
+                          product.name,
+                          style: GoogleFonts.ubuntu(
+                            color: Colors.black,
+                          ),
+                        ),
+                        subtitle: Text(
+                          product.price.toString(),
+                          style: GoogleFonts.ubuntu(
+                            color: Colors.black,
+                          ),
+                        ),
+                        trailing: Container(
+                          width: 20,
+                          child: Row(
+                            children: [
+                              Text(
+                                product.amount.toString(),
+                                style: GoogleFonts.ubuntu(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

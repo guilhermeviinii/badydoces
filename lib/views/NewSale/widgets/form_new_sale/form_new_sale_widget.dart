@@ -27,7 +27,6 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   String selectedCategory;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -48,6 +47,13 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: Color(0xFF4360F6)),
                     labelText: 'Cliente',
+                    enabled:
+                        Provider.of<NewSaleController>(context, listen: true)
+                                    .products
+                                    .length >
+                                0
+                            ? false
+                            : true,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8)),
                     focusedBorder: OutlineInputBorder(
