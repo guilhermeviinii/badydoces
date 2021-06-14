@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ProductRepository extends ChangeNotifier {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   List<Product> products = List<Product>();
+  List<Product> filteredProducts = <Product>[];
   ProductRepository() {
     read();
   }
@@ -58,7 +59,7 @@ class ProductRepository extends ChangeNotifier {
     } catch (erro) {}
   }
 
-  Future<List<Product>> fetchProductByCategory(String category) async {
+  Future<void> fetchProductByCategory({String category = ''}) async {
     try {
       final SharedPreferences prefs = await _prefs;
       Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
@@ -73,9 +74,8 @@ class ProductRepository extends ChangeNotifier {
       if (response.statusCode == 200) {
         Iterable products = jsonDecode(response.body) as List;
         var lista = products.map((objeto) => Product.fromJson(objeto));
-        this.products = lista.toList();
+        this.filteredProducts = lista.toList();
         notifyListeners();
-        return this.products;
       }
     } catch (erro) {}
   }
@@ -108,7 +108,6 @@ class ProductRepository extends ChangeNotifier {
           'Authorization': "Bearer $token"
         });
     if (response.statusCode == 200) {
-      print(product.id);
       int index = this.products.indexWhere((p) => p.id == product.id);
       this.products[index] = product;
       notifyListeners();

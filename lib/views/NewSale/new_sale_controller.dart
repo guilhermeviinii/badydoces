@@ -1,6 +1,11 @@
 import 'package:badydoces/models/categoria.model.dart';
+import 'package:badydoces/models/new_sale_model.dart';
 import 'package:badydoces/models/produto.model.dart';
 import 'package:badydoces/models/venda.model.dart';
+import 'package:badydoces/repositories/produto_repository.dart';
+import 'package:badydoces/repositories/venda_repository.dart';
+import 'package:badydoces/views/NewSale/new_sale.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:badydoces/views/Home/home_controller.dart';
@@ -8,11 +13,34 @@ import 'package:badydoces/views/Home/home_controller.dart';
 class NewSaleController extends ChangeNotifier {
   static NewSaleController instance = NewSaleController();
   Categoria select_category;
+  List<Product> products = [];
+  String costumer;
+  List<Categoria> categories;
+  Sale newSale;
   Product select_product;
 
   Sale fieldsNewSale = Sale();
 
-  atribuir() {
+  void addProduct(Product product) {
+    print(product.amount);
+    this.products.add(product);
     notifyListeners();
+  }
+
+  void removeProduct(int index) {
+    this.products.removeAt(index);
+    notifyListeners();
+  }
+
+  Future<bool> realizarVenda(String adminId) async {
+    newSale = Sale(
+      adminId: adminId,
+      costumer: fieldsNewSale.costumer,
+      idProduct: products,
+    );
+    try {
+      return await SaleRepository().create(newSale);
+    } catch (err) {}
+    return false;
   }
 }

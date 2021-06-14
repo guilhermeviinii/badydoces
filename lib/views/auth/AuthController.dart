@@ -16,21 +16,32 @@ class AuthController extends ChangeNotifier {
   bool get isLoggedUser => isLogged;
 
   Future<bool> login() async {
-    repository.admin = usuario;
-    isLogged = await repository.login();
-    notifyListeners();
-    return isLogged;
+    try {
+      repository.admin = usuario;
+      isLogged = await repository.login();
+      notifyListeners();
+      return isLogged;
+    } catch (err) {}
   }
 
   Future<Admin> autenticar() async {
     try {
       final SharedPreferences prefs = await _prefs;
-
-      usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      print(prefs);
+      this.usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
       isLogged = true;
+      notifyListeners();
     } catch (err) {
+      print(err);
       isLogged = false;
+      notifyListeners();
     }
-    notifyListeners();
+  }
+
+  Future<void> logout(context) async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.clear();
+    print(prefs);
+    Navigator.of(context).pushNamed('/');
   }
 }

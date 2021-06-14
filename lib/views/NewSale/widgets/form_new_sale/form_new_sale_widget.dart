@@ -1,10 +1,16 @@
 import 'dart:html';
 
+import 'package:badydoces/models/new_sale_model.dart';
+import 'package:badydoces/models/produto.model.dart';
 import 'package:badydoces/models/venda.model.dart';
+import 'package:badydoces/repositories/admin_repository.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
+import 'package:badydoces/repositories/produto_repository.dart';
+import 'package:badydoces/views/NewSale/new_sale.dart';
 import 'package:badydoces/views/NewSale/new_sale_controller.dart';
 import 'package:badydoces/views/NewSale/widgets/dropdown_category_widget/dropdown_category_widget.dart';
 import 'package:badydoces/views/NewSale/widgets/dropdown_product_widget/dropdown_product_widget.dart';
+import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,11 +27,9 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   String selectedCategory;
-  NewSaleController controller = NewSaleController();
 
   @override
   Widget build(BuildContext context) {
-    CategoryRepository _repoCategory = Provider.of<CategoryRepository>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
       child: Form(
@@ -37,7 +41,9 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: TextFormField(
                 onChanged: (value) {
-                  controller.fieldsNewSale.costumer = value;
+                  Provider.of<NewSaleController>(context, listen: false)
+                      .fieldsNewSale
+                      .costumer = value;
                 },
                 decoration: InputDecoration(
                     hintStyle: TextStyle(color: Color(0xFF4360F6)),
@@ -62,11 +68,8 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
               decoration: BoxDecoration(),
               margin: EdgeInsets.only(top: 16),
               width: double.infinity,
-              child: DropDownCategoryWidget(
-                  selectedCategory: selectedCategory,
-                  items: _repoCategory.categorias),
+              child: DropDownCategoryWidget(),
             ),
-
             Row(
               children: [
                 Flexible(
@@ -75,7 +78,7 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                     decoration: BoxDecoration(),
                     margin: EdgeInsets.only(top: 16),
                     width: double.infinity,
-                    // child: DropDownProductWidget(),
+                    child: DropDownProductWidget(),
                   ),
                 ),
                 Flexible(
@@ -86,6 +89,11 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: TextFormField(
+                      onChanged: (value) {
+                        Provider.of<NewSaleController>(context, listen: false)
+                            .fieldsNewSale
+                            .value = value;
+                      },
                       decoration: InputDecoration(
                           labelText: 'Qtd',
                           border: OutlineInputBorder(
@@ -120,7 +128,47 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                 ),
                 onPressed: () {
                   // if (_formKey.currentState.validate()) {
+                  var price;
+                  Provider.of<ProductRepository>(context, listen: false)
+                      .products
+                      .forEach((element) {
+                    if (element.id ==
+                        Provider.of<NewSaleController>(context, listen: false)
+                            .select_product
+                            .id) {
+                      price = double.tryParse(
+                              element.price.replaceAll(new RegExp(r'\$'), ''))
+                          .toInt();
+                    }
+                  });
+
+                  price = price *
+                      double.tryParse(Provider.of<NewSaleController>(context,
+                                  listen: false)
+                              .fieldsNewSale
+                              .value)
+                          .toInt();
+                  print(price);
+
+                  Product newSale = new Product(
+                      price: price.toString(),
+                      name:
+                          Provider.of<NewSaleController>(context, listen: false)
+                              .select_product
+                              .name,
+                      id: Provider.of<NewSaleController>(context, listen: false)
+                          .select_product
+                          .id,
+                      amount: double.tryParse(Provider.of<NewSaleController>(
+                                  context,
+                                  listen: false)
+                              .fieldsNewSale
+                              .value)
+                          .round());
+                  Provider.of<NewSaleController>(context, listen: false)
+                      .addProduct(newSale);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    duration: Duration(seconds: 1),
                     content: Text(
                       'Venda adicionada com sucesso',
                       style: TextStyle(color: Colors.white),

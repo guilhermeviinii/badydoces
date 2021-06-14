@@ -1,4 +1,6 @@
+import 'package:badydoces/views/Home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TotalVendasCardWidget extends StatelessWidget {
@@ -8,6 +10,7 @@ class TotalVendasCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<HomeController>(context, listen: false).allSales();
     return Container(
       decoration: BoxDecoration(
           color: Colors.green[800],
@@ -63,12 +66,33 @@ class TotalVendasCardWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "15000.00",
-                  style: GoogleFonts.ubuntu(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w300),
+                Consumer<HomeController>(
+                  builder: (context, value, child) {
+                    if (value.sales != null) {
+                      var totalVendas = 0;
+                      value.sales.forEach((element) {
+                        totalVendas += double.tryParse(
+                                element.value.replaceAll(new RegExp(r'\$'), ''))
+                            .toInt();
+                      });
+                      String totalVendasString = totalVendas.toStringAsFixed(2);
+
+                      return Text(
+                        "R\$${totalVendasString.replaceAll('\.', ',')}",
+                        style: GoogleFonts.ubuntu(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300),
+                      );
+                    }
+                    return Text(
+                      "R\$ 0.00",
+                      style: GoogleFonts.ubuntu(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300),
+                    );
+                  },
                 )
               ],
             ),

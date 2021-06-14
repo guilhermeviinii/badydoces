@@ -17,8 +17,17 @@ class SaleRepository extends ChangeNotifier {
     final SharedPreferences prefs = await _prefs;
     Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
     var token = usuario.token;
+    sale.adminId = usuario.id;
+    sale.idProduct.forEach((element) {
+      print(element.id);
+      print(element.amount);
+      print(element.price.toString());
+    });
+    var body = jsonEncode(sale.toJson());
+    print(body);
+
     var response = await http.post(
-      '',
+      'https://backend-badydoces.herokuapp.com/new-sale',
       body: jsonEncode(sale.toJson()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -31,6 +40,7 @@ class SaleRepository extends ChangeNotifier {
       notifyListeners();
       return true;
     }
+    print(response.body);
     return false;
   }
 
