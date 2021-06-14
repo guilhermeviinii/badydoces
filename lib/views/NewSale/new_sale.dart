@@ -22,11 +22,11 @@ class NewSale extends StatelessWidget {
           opacity: .4,
         ),
         foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff26056C),
         title: Text(
           'Nova venda',
           style: GoogleFonts.ubuntu(
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
       ),

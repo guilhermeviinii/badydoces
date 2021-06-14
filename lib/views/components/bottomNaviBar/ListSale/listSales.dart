@@ -44,7 +44,7 @@ class _ListSalesState extends State<ListSales> {
           color: Colors.black,
           opacity: .4,
         ),
-        backgroundColor: Color(0xff71C173),
+        backgroundColor: Color(0xff26056C),
         title: Text(
           'Controle de vendas',
           style: GoogleFonts.ubuntu(
@@ -82,7 +82,7 @@ class _ListSalesState extends State<ListSales> {
                         borderRadius: BorderRadius.circular(11.36),
                         boxShadow: [
                           BoxShadow(
-                            color: Color(0xff71C173),
+                            color: Colors.blue,
                             blurRadius: 2,
                             offset: Offset(1, 3),
                           ),
@@ -154,7 +154,7 @@ class _ListSalesState extends State<ListSales> {
           boxShadow: [
             BoxShadow(
               blurRadius: 2,
-              color: Colors.blue,
+              color: Color(0xff26056C),
               offset: Offset(1, 4),
             ),
           ]),
