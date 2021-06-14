@@ -17,21 +17,27 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthController _authController =
-        Provider.of<AuthController>(context, listen: false);
-    _authController.autenticar();
-    SaleRepository _vendasRepo = Provider.of<SaleRepository>(context);
+    Provider.of<AuthController>(context, listen: false).autenticar();
 
     return Scaffold(
       appBar: AppBar(
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Provider.of<AuthController>(context, listen: false)
+                    .logout(context);
+              },
+              child: Text('Logout'),
+              style: ButtonStyle(),
+            )
+          ],
           automaticallyImplyLeading: false,
           centerTitle: true,
           backgroundColor: Color(0xff71C173),
           title: Consumer<AuthController>(
             builder: (context, value, child) {
-              var userName = value.user.name;
               return Text(
-                'Logado como $userName - Bady Doces',
+                '${value.user.name} - Bady Doces',
                 style: GoogleFonts.ubuntu(
                   color: Colors.black,
                 ),
@@ -40,42 +46,48 @@ class Home extends StatelessWidget {
           )),
       body: Column(
         children: [
-          Stack(
-            children: [
-              Container(
-                height: 129,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("images/candy.jpg"),
-                    fit: BoxFit.cover,
+          Expanded(
+            child: Stack(
+              clipBehavior: Clip.hardEdge,
+              children: [
+                Container(
+                  height: 129,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("images/candy.jpg"),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Align(
-                  alignment: Alignment(-0.9, -0.8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 32,
-                      ),
-                      TotalVendasCardWidget(),
-                      EstoqueAlertaWidget(),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Align(
+                    alignment: Alignment(-0.9, -0.8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          height: 32,
+                        ),
+                        TotalVendasCardWidget(),
+                        EstoqueAlertaWidget(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          SizedBox(
-            height: 80,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: CardLatestSalesWidget(),
+          Expanded(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: CardLatestSalesWidget(),
+                ),
+              ],
+            ),
           ),
         ],
       ),

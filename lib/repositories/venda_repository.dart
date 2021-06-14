@@ -54,6 +54,7 @@ class SaleRepository extends ChangeNotifier {
       }
     } catch (err) {}
   }
+  
 
   Future<void> delete(int id) async {
     final SharedPreferences prefs = await _prefs;

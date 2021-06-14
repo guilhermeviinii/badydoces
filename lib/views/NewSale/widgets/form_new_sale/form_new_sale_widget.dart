@@ -1,10 +1,15 @@
 import 'dart:html';
 
+import 'package:badydoces/models/new_sale_model.dart';
 import 'package:badydoces/models/venda.model.dart';
+import 'package:badydoces/repositories/admin_repository.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
+import 'package:badydoces/repositories/produto_repository.dart';
+import 'package:badydoces/views/NewSale/new_sale.dart';
 import 'package:badydoces/views/NewSale/new_sale_controller.dart';
 import 'package:badydoces/views/NewSale/widgets/dropdown_category_widget/dropdown_category_widget.dart';
 import 'package:badydoces/views/NewSale/widgets/dropdown_product_widget/dropdown_product_widget.dart';
+import 'package:badydoces/views/auth/AuthController.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +27,7 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
   final _formKey = GlobalKey<FormState>();
   String selectedCategory;
   NewSaleController controller = NewSaleController();
+  AdminRepository _adminRepo = AdminRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +68,8 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
               decoration: BoxDecoration(),
               margin: EdgeInsets.only(top: 16),
               width: double.infinity,
-              child: DropDownCategoryWidget(
-                  selectedCategory: selectedCategory,
-                  items: _repoCategory.categorias),
+              child: DropDownCategoryWidget(),
             ),
-
             Row(
               children: [
                 Flexible(
@@ -75,7 +78,7 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                     decoration: BoxDecoration(),
                     margin: EdgeInsets.only(top: 16),
                     width: double.infinity,
-                    // child: DropDownProductWidget(),
+                    child: DropDownProductWidget(),
                   ),
                 ),
                 Flexible(
@@ -86,6 +89,9 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: TextFormField(
+                      onChanged: (value) {
+                        controller.fieldsNewSale.value = value;
+                      },
                       decoration: InputDecoration(
                           labelText: 'Qtd',
                           border: OutlineInputBorder(
@@ -120,6 +126,20 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                 ),
                 onPressed: () {
                   // if (_formKey.currentState.validate()) {
+
+                  NewSaleModel newSale = NewSaleModel(
+                     productName:
+                          Provider.of<NewSaleController>(context, listen: false)
+                              .select_product
+                              .name,
+                      idProduct:
+                          Provider.of<NewSaleController>(context, listen: false)
+                              .select_product
+                              .id,
+                      amount: double.tryParse(controller.fieldsNewSale.value)
+                          .round());
+                  Provider.of<NewSaleController>(context, listen: false)
+                      .addProduct(newSale);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(
                       'Venda adicionada com sucesso',

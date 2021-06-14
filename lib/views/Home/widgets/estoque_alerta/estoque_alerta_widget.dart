@@ -1,5 +1,7 @@
+import 'package:badydoces/views/Home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EstoqueAlertaWidget extends StatelessWidget {
   const EstoqueAlertaWidget({
@@ -8,6 +10,7 @@ class EstoqueAlertaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<HomeController>(context, listen: false).fetchProducts();
     return Container(
       decoration: BoxDecoration(
           color: Colors.yellow[800],
@@ -64,37 +67,64 @@ class EstoqueAlertaWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Há',
-                          style: GoogleFonts.ubuntu(
-                            color: Colors.black,
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  child: Consumer<HomeController>(
+                    builder: (context, value, child) {
+                      if (value.products != null) {
+                        var produtosBaixoEtq = 0;
+                        value.products.forEach((element) {
+                          if (element.amount <= 5) {
+                            produtosBaixoEtq += 1;
+                          }
+                        });
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Há',
+                              style: GoogleFonts.ubuntu(
+                                color: Colors.black,
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '${produtosBaixoEtq}',
+                              style: GoogleFonts.ubuntu(
+                                color: Colors.red[800],
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'produtos com estoque baixo',
+                              style: GoogleFonts.ubuntu(
+                                color: Colors.black,
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Estoque cheio',
+                            style: GoogleFonts.ubuntu(
+                              color: Colors.green[900],
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        Text(
-                          ' 3 ',
-                          style: GoogleFonts.ubuntu(
-                            color: Colors.red[400],
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'produtos com estoque baixo',
-                          style: GoogleFonts.ubuntu(
-                            color: Colors.black,
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ))
+                        ],
+                      );
+                    },
+                  ),
+                )
               ],
             ),
           )

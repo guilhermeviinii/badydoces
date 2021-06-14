@@ -1,7 +1,11 @@
+import 'package:badydoces/models/new_sale_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductAddWdiget extends StatelessWidget {
-  const ProductAddWdiget({Key key}) : super(key: key);
+  final NewSaleModel productAdd;
+  final int index;
+  const ProductAddWdiget({Key key, this.productAdd, this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +38,17 @@ class ProductAddWdiget extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 3,
-                    child: Text('#1 - Paçoca'),
+                    child: Text('#${index + 1} - ${productAdd.productName}'),
                   ),
                   Expanded(
                     flex: 1,
-                    child: Text('Quantidade: 3'),
+                    child: Text('Quantidade: ${productAdd.amount}'),
                   ),
                 ],
               ),
             ),
             Expanded(child: Divider()),
-            Expanded(child: Text('Valor - 40'))
+            // Expanded(child: Text('Valor - 40'))
           ],
         ),
       ),
