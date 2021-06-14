@@ -1,8 +1,11 @@
 import 'package:badydoces/models/new_sale_model.dart';
+import 'package:badydoces/models/produto.model.dart';
+import 'package:badydoces/views/NewSale/new_sale_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductAddWdiget extends StatelessWidget {
-  final NewSaleModel productAdd;
+  final Product productAdd;
   final int index;
   const ProductAddWdiget({Key key, this.productAdd, this.index})
       : super(key: key);
@@ -38,7 +41,7 @@ class ProductAddWdiget extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 3,
-                    child: Text('#${index + 1} - ${productAdd.productName}'),
+                    child: Text('#${index + 1} - ${productAdd.name}'),
                   ),
                   Expanded(
                     flex: 1,
@@ -48,7 +51,30 @@ class ProductAddWdiget extends StatelessWidget {
               ),
             ),
             Expanded(child: Divider()),
-            // Expanded(child: Text('Valor - 40'))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red[400],
+                    ),
+                    onPressed: () {
+                      Provider.of<NewSaleController>(context, listen: false)
+                          .removeProduct(index);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        duration: Duration(seconds: 1),
+                        content: Text(
+                          'Venda removida com sucesso',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        backgroundColor: Colors.red[400],
+                      ));
+                    },
+                    child: Icon(
+                      Icons.close,
+                    ))
+              ],
+            )
           ],
         ),
       ),

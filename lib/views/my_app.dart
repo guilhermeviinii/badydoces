@@ -1,3 +1,4 @@
+import 'package:badydoces/repositories/admin_repository.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:badydoces/repositories/venda_produto_repository.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<HomeController>.value(value: HomeController()),
         ChangeNotifierProvider(
           create: (context) => NewSaleController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AdminRepository(),
         ),
         ChangeNotifierProvider(
           create: (context) => CategoryRepository(),
