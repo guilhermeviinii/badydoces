@@ -58,7 +58,7 @@ class Home extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("images/candy.jpg"),
+                      image: AssetImage("lib/assets/images/candy.jpg"),
                       fit: BoxFit.cover,
                     ),
                   ),
