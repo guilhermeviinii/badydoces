@@ -18,6 +18,7 @@ Categoria itemSelecionado;
 class _StockState extends State<Stock> {
   @override
   Widget build(BuildContext context) {
+    //Categoria itemSelecionado;
     var repositoryCategory =
         Provider.of<CategoryRepository>(context, listen: true);
 //     var repositoryProduct =
