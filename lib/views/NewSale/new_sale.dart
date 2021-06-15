@@ -91,15 +91,16 @@ class NewSale extends StatelessWidget {
                       Provider.of<AdminRepository>(context, listen: false)
                           .admin
                           .id;
-                  await Provider.of<NewSaleController>(context, listen: false)
+                  bool created = await Provider.of<NewSaleController>(context,
+                          listen: false)
                       .realizarVenda(adminId);
-                  bool created =
-                      Provider.of<SaleRepository>(context, listen: false)
-                          .createdNewSale;
                   print(created);
                   if (created == true) {
                     Provider.of<NewSaleController>(context, listen: false)
                         .products = [];
+                    Provider.of<SaleRepository>(context, listen: false).read();
+                    Provider.of<ProductRepository>(context, listen: false)
+                        .read();
                     Navigator.of(context).pushNamed('/listsales');
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -15,7 +15,7 @@ class SaleRepository extends ChangeNotifier {
     read();
   }
 
-  Future<void> create(Sale sale) async {
+  Future<bool> create(Sale sale) async {
     this.preferences = await SharedPreferences.getInstance();
     Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
@@ -32,13 +32,11 @@ class SaleRepository extends ChangeNotifier {
     if (response.statusCode == 200) {
       Sale sale = Sale.fromJson(jsonDecode(response.body));
       this.sales.add(sale);
-      this.createdNewSale = true;
       await ProductRepository().read();
-      notifyListeners();
-      return;
+      return true;
+    } else {
+      return false;
     }
-    this.createdNewSale = true;
-    notifyListeners();
   }
 
   Future<void> read() async {

@@ -15,7 +15,7 @@ class Sale {
     idSale = json['id_sale'];
     adminId = json['admin_id'];
     costumer = json['costumer'];
-    value = json['value'];
+    value = json['value'].toString();
     createdAt = json['created_at'];
     if (json['id_product'] != null) {
       idProduct = <Product>[];
