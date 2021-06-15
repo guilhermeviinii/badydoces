@@ -11,17 +11,17 @@ class InfoSales extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         iconTheme: IconThemeData(
-          color: Colors.white,
+          color: Colors.black,
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded),
           onPressed: () => Navigator.of(context).pushNamed('/listsales'),
         ),
-        backgroundColor: Color(0xff71C173),
+        backgroundColor: Colors.white,
         title: Text(
           'Controle de vendas',
           style: GoogleFonts.ubuntu(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ),

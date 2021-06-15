@@ -10,18 +10,15 @@ class AddProduct extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_rounded),
           onPressed: () => Navigator.of(context).pushNamed('/estoque'),
         ),
-        backgroundColor: Color(0xff71C173),
+        backgroundColor: Colors.white,
         title: Text(
           'Adicionar Produtos',
           style: GoogleFonts.ubuntu(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ),

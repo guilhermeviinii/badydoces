@@ -1,3 +1,4 @@
+import 'package:badydoces/main.dart';
 import 'package:badydoces/models/categoria.model.dart';
 import 'package:badydoces/models/produto.model.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
@@ -39,11 +40,11 @@ class _StockState extends State<Stock> {
           color: Colors.black,
           opacity: .4,
         ),
-        backgroundColor: Color(0xff26056C),
+        backgroundColor: Colors.white,
         title: Text(
           'Estoque',
           style: GoogleFonts.ubuntu(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ),
@@ -73,17 +74,14 @@ class _StockState extends State<Stock> {
                   return confirmarExclusao(context);
                 },
                 child: Container(
-                  margin: EdgeInsets.only(left: 30, right: 30, top: 10),
+                  margin:
+                      EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 8),
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(11.36),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.blue,
-                          blurRadius: 2,
-                          offset: Offset(1, 3),
-                        ),
-                      ]),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.fromBorderSide(
+                        BorderSide(color: Colors.blue, width: 2.0)),
+                  ),
                   child: ListTile(
                     onTap: () {
                       Navigator.of(context).pushNamed(
@@ -122,13 +120,38 @@ class _StockState extends State<Stock> {
               );
             },
           )),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 30, bottom: 10),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    padding: EdgeInsets.all(20),
+                    onSurface: Colors.black,
+                    textStyle: TextStyle(
+                      color: Colors.green[200],
+                    ),
+                  ),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed('/add_product'),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 16),
+                        child: Icon(Icons.add_circle),
+                      ),
+                      Text('Adicionar novo produto'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text('Adicionar produtos'),
-        icon: Icon(Icons.add),
-        backgroundColor: Colors.blue,
-        onPressed: () => Navigator.of(context).pushNamed('/add_product'),
       ),
       bottomNavigationBar: BottomNaviBar(indexTela: 2),
     );
@@ -139,15 +162,11 @@ class _StockState extends State<Stock> {
       margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(11.36),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 2,
-              color: Color(0xff26056C),
-              offset: Offset(1, 4),
-            ),
-          ]),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.fromBorderSide(
+            BorderSide(color: Colors.grey[700], width: 2.0)),
+      ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           value: (itemSelecionado == null)

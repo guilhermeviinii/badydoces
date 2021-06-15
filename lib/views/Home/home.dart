@@ -35,13 +35,13 @@ class Home extends StatelessWidget {
           ],
           automaticallyImplyLeading: false,
           centerTitle: true,
-          backgroundColor: Color(0xff26056C),
+          backgroundColor: Colors.white,
           title: Consumer<AuthController>(
             builder: (context, value, child) {
               return Text(
                 '${value.user.name} - Bady Doces',
                 style: GoogleFonts.ubuntu(
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               );
             },
