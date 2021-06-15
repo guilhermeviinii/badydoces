@@ -19,7 +19,7 @@ class Login extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      child: Image.asset('images/LOGO.png'),
+                      child: Image.asset('lib/assets/images/LOGO.png'),
                       decoration: BoxDecoration(),
                     )
                   ],
@@ -138,22 +138,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       elevation: 4,
                     ),
                     onPressed: () async {
-                      await Provider.of<AuthController>(context, listen: false)
-                          .login();
-                      var loggin =
+                      if (_formKey.currentState.validate()) {
+                        await Provider.of<AuthController>(context,
+                                listen: false)
+                            .login();
+                        var loggin =
+                            Provider.of<AuthController>(context, listen: false)
+                                .isLoggedUser;
+                        if (loggin == true) {
                           Provider.of<AuthController>(context, listen: false)
-                              .isLoggedUser;
-                      if (loggin == true) {
-                        Provider.of<AuthController>(context, listen: false)
-                            .autenticar();
-                        Navigator.of(context).pushNamed('/tela_inicial');
-                      } else {
-                        return showAlertDialog1(context);
+                              .autenticar();
+                          Navigator.of(context).pushNamed('/tela_inicial');
+                        } else {
+                          return showAlertDialog1(context);
+                        }
                       }
-
-// if (_formKey.currentState.validate()) {
-// // Process data.
-// }
                     },
                     child: const Text('Entrar'),
                   ),
