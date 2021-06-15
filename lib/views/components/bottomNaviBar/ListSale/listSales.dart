@@ -44,11 +44,11 @@ class _ListSalesState extends State<ListSales> {
           color: Colors.black,
           opacity: .4,
         ),
-        backgroundColor: Color(0xff26056C),
+        backgroundColor: Colors.white,
         title: Text(
           'Controle de vendas',
           style: GoogleFonts.ubuntu(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ),
@@ -78,15 +78,11 @@ class _ListSalesState extends State<ListSales> {
                   child: Container(
                     margin: EdgeInsets.only(left: 30, right: 30, top: 10),
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(11.36),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.blue,
-                            blurRadius: 2,
-                            offset: Offset(1, 3),
-                          ),
-                        ]),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.fromBorderSide(
+                          BorderSide(color: Colors.blue, width: 2.0)),
+                    ),
                     child: ListTile(
                       onTap: () {
                         Navigator.of(context).pushNamed(
@@ -149,15 +145,11 @@ class _ListSalesState extends State<ListSales> {
       margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(11.36),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 2,
-              color: Color(0xff26056C),
-              offset: Offset(1, 4),
-            ),
-          ]),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.fromBorderSide(
+            BorderSide(color: Colors.grey[700], width: 2.0)),
+      ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           value: selecionado,
@@ -189,20 +181,20 @@ class _ListSalesState extends State<ListSales> {
       barrierDismissible: false,
       builder: (_) {
         return AlertDialog(
-          title: Text("Venda excluida"),
+          title: Text("Deseja excluir essa venda?"),
           actions: [
             FlatButton(
-              child: Text("Ok"),
+              child: Text("Sim"),
               onPressed: () {
                 Navigator.of(context).pop(true);
               },
             ),
-            // FlatButton(
-            //   child: Text("Cancelar"),
-            //   onPressed: () {
-            //     Navigator.of(context).pop(false);
-            //   },
-            // ),
+            FlatButton(
+              child: Text("Não"),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
           ],
         );
       },

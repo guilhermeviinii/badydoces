@@ -17,16 +17,13 @@ class NewSale extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-          opacity: .4,
-        ),
+        automaticallyImplyLeading: false,
         foregroundColor: Colors.black,
-        backgroundColor: Color(0xff26056C),
+        backgroundColor: Colors.white,
         title: Text(
           'Nova venda',
           style: GoogleFonts.ubuntu(
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ),
