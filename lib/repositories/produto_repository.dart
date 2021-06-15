@@ -30,6 +30,7 @@ class ProductRepository extends ChangeNotifier {
     if (response.statusCode == 200) {
       Product product = Product.fromJson(jsonDecode(response.body));
       this.products.add(product);
+      read();
 
       notifyListeners();
       return true;

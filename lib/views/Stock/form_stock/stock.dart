@@ -21,12 +21,12 @@ class _StockState extends State<Stock> {
     //Categoria itemSelecionado;
     var repositoryCategory =
         Provider.of<CategoryRepository>(context, listen: true);
-//     var repositoryProduct =
-//         Provider.of<ProductRepository>(context, listen: true);
+    var repositoryProduct =
+        Provider.of<ProductRepository>(context, listen: false);
     var categorias = repositoryCategory.categorias;
     Iterable<Product> produtosCat;
 //
-//     var produtos = repositoryProduct.products;
+    //    var produtos = repositoryProduct.products;
 
     return Scaffold(
       appBar: AppBar(
@@ -69,11 +69,9 @@ class _StockState extends State<Stock> {
                     background: Container(
                       color: Colors.red,
                     ),
-                    onDismissed: (direction) {
-                      value.delete(product.id);
-                    },
+                    onDismissed: (direction) {},
                     confirmDismiss: (direction) {
-                      return confirmarExclusao(context);
+                      return confirmarExclusao(context, product.id);
                     },
                     child: Container(
                       margin: EdgeInsets.only(
@@ -205,7 +203,7 @@ class _StockState extends State<Stock> {
     );
   }
 
-  Future<bool> confirmarExclusao(BuildContext context) async {
+  Future<bool> confirmarExclusao(BuildContext context, String id) async {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -216,7 +214,9 @@ class _StockState extends State<Stock> {
             FlatButton(
               child: Text("Ok"),
               onPressed: () async {
-                await Provider.of<ProductRepository>(context, listen: true)
+                Provider.of<ProductRepository>(context, listen: false)
+                    .delete(id);
+                await Provider.of<ProductRepository>(context, listen: false)
                     .read();
                 Navigator.of(context).pushNamed('/estoque');
               },
