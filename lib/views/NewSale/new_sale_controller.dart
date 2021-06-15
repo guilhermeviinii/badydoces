@@ -18,6 +18,7 @@ class NewSaleController extends ChangeNotifier {
   List<Categoria> categories;
   Sale newSale;
   Product select_product;
+  bool created;
 
   Sale fieldsNewSale = Sale();
 
@@ -33,14 +34,19 @@ class NewSaleController extends ChangeNotifier {
   }
 
   Future<bool> realizarVenda(String adminId) async {
+    created = false;
     newSale = Sale(
       adminId: adminId,
       costumer: fieldsNewSale.costumer,
       idProduct: products,
     );
     try {
-      await SaleRepository().create(newSale);
-    } catch (err) {}
-    return false;
+      bool created = await SaleRepository().create(newSale);
+      notifyListeners();
+      return created;
+    } catch (err) {
+      return false;
+    }
+    notifyListeners();
   }
 }

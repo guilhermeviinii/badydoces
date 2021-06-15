@@ -1,5 +1,6 @@
 import 'package:badydoces/models/admin.model.dart';
 import 'package:badydoces/models/venda.model.dart';
+import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -14,7 +15,7 @@ class SaleRepository extends ChangeNotifier {
     read();
   }
 
-  Future<void> create(Sale sale) async {
+  Future<bool> create(Sale sale) async {
     this.preferences = await SharedPreferences.getInstance();
     Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
@@ -31,12 +32,11 @@ class SaleRepository extends ChangeNotifier {
     if (response.statusCode == 200) {
       Sale sale = Sale.fromJson(jsonDecode(response.body));
       this.sales.add(sale);
-      this.createdNewSale = true;
-      notifyListeners();
-      return;
+      await ProductRepository().read();
+      return true;
+    } else {
+      return false;
     }
-    this.createdNewSale = true;
-    notifyListeners();
   }
 
   Future<void> read() async {
