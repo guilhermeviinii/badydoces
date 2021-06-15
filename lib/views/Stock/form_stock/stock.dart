@@ -20,17 +20,12 @@ class _StockState extends State<Stock> {
   Widget build(BuildContext context) {
     var repositoryCategory =
         Provider.of<CategoryRepository>(context, listen: true);
-    var repositoryProduct =
-        Provider.of<ProductRepository>(context, listen: true);
+//     var repositoryProduct =
+//         Provider.of<ProductRepository>(context, listen: true);
     var categorias = repositoryCategory.categorias;
     Iterable<Product> produtosCat;
-
-    var produtos = repositoryProduct.products;
-
-    if (itemSelecionado != null) {
-      produtosCat = repositoryProduct.products.where(
-          (product) => product.name_category == itemSelecionado.category_name);
-    }
+//
+//     var produtos = repositoryProduct.products;
 
     return Scaffold(
       appBar: AppBar(
@@ -52,71 +47,79 @@ class _StockState extends State<Stock> {
         children: [
           dropDownCAtegoria(categorias),
           Divider(),
-          Expanded(
-              child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: (itemSelecionado == null)
-                ? produtos.length
-                : produtosCat.length,
-            itemBuilder: (_, index) {
-              var product = (itemSelecionado == null)
-                  ? produtos[index]
-                  : produtosCat.toList()[index];
-              return Dismissible(
-                key: Key(product.name),
-                background: Container(
-                  color: Colors.red,
-                ),
-                onDismissed: (direction) {
-                  repositoryProduct.delete(product.id);
-                },
-                confirmDismiss: (direction) {
-                  return confirmarExclusao(context);
-                },
-                child: Container(
-                  margin:
-                      EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.fromBorderSide(
-                        BorderSide(color: Colors.blue, width: 2.0)),
-                  ),
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(
-                        '/edit_product',
-                        arguments: product,
-                      );
+          Expanded(child: Consumer<ProductRepository>(
+            builder: (context, value, child) {
+              //value.products;
+              if (itemSelecionado != null) {
+                produtosCat = value.products.where((product) =>
+                    product.name_category == itemSelecionado.category_name);
+              }
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: (itemSelecionado == null)
+                    ? value.products.length
+                    : produtosCat.length,
+                itemBuilder: (_, index) {
+                  var product = (itemSelecionado == null)
+                      ? value.products[index]
+                      : produtosCat.toList()[index];
+                  return Dismissible(
+                    key: Key(product.name),
+                    background: Container(
+                      color: Colors.red,
+                    ),
+                    onDismissed: (direction) {
+                      value.delete(product.id);
                     },
-                    title: Text(
-                      product.name,
-                      style: GoogleFonts.ubuntu(
-                        color: Colors.black,
+                    confirmDismiss: (direction) {
+                      return confirmarExclusao(context);
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          left: 30, right: 30, top: 10, bottom: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.fromBorderSide(
+                            BorderSide(color: Colors.blue, width: 2.0)),
                       ),
-                    ),
-                    subtitle: Text(
-                      product.price.toString(),
-                      style: GoogleFonts.ubuntu(
-                        color: Colors.black,
-                      ),
-                    ),
-                    trailing: Container(
-                      width: 20,
-                      child: Row(
-                        children: [
-                          Text(
-                            product.amount.toString(),
-                            style: GoogleFonts.ubuntu(
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            '/edit_product',
+                            arguments: product,
+                          );
+                        },
+                        title: Text(
+                          product.name,
+                          style: GoogleFonts.ubuntu(
+                            color: Colors.black,
                           ),
-                        ],
+                        ),
+                        subtitle: Text(
+                          'R' + product.price.toString(),
+                          style: GoogleFonts.ubuntu(
+                            color: Colors.black,
+                          ),
+                        ),
+                        trailing: Container(
+                          width: 20,
+                          child: Row(
+                            children: [
+                              Text(
+                                product.amount.toString(),
+                                style: GoogleFonts.ubuntu(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               );
             },
           )),
@@ -211,8 +214,10 @@ class _StockState extends State<Stock> {
           actions: [
             FlatButton(
               child: Text("Ok"),
-              onPressed: () {
-                Navigator.of(context).pop(true);
+              onPressed: () async {
+                await Provider.of<ProductRepository>(context, listen: true)
+                    .read();
+                Navigator.of(context).pushNamed('/estoque');
               },
             ),
             FlatButton(

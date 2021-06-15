@@ -1,5 +1,6 @@
 import 'package:badydoces/models/admin.model.dart';
 import 'package:badydoces/models/venda.model.dart';
+import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -32,6 +33,7 @@ class SaleRepository extends ChangeNotifier {
       Sale sale = Sale.fromJson(jsonDecode(response.body));
       this.sales.add(sale);
       this.createdNewSale = true;
+      await ProductRepository().read();
       notifyListeners();
       return;
     }
