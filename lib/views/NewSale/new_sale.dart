@@ -98,6 +98,8 @@ class NewSale extends StatelessWidget {
                   if (created == true) {
                     Provider.of<NewSaleController>(context, listen: false)
                         .products = [];
+                    Provider.of<NewSaleController>(context, listen: false)
+                        .select_product = null;
                     Provider.of<SaleRepository>(context, listen: false).read();
                     Provider.of<ProductRepository>(context, listen: false)
                         .read();

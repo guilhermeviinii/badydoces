@@ -48,7 +48,8 @@ class Home extends StatelessWidget {
           )),
       body: Column(
         children: [
-          Expanded(
+          Container(
+            height: 200,
             child: Stack(
               clipBehavior: Clip.hardEdge,
               children: [
