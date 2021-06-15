@@ -138,11 +138,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       elevation: 4,
                     ),
                     onPressed: () async {
-                      var loggin = await Provider.of<AuthController>(context,
-                              listen: false)
+                      await Provider.of<AuthController>(context, listen: false)
                           .login();
-
+                      var loggin =
+                          Provider.of<AuthController>(context, listen: false)
+                              .isLoggedUser;
                       if (loggin == true) {
+                        Provider.of<AuthController>(context, listen: false)
+                            .autenticar();
                         Navigator.of(context).pushNamed('/tela_inicial');
                       } else {
                         return showAlertDialog1(context);

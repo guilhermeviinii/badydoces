@@ -61,7 +61,7 @@ class CardLatestSalesWidget extends StatelessWidget {
                       ),
                     ));
                   });
-                  return items[1];
+                  return items[0];
                 }),
               ],
             ),

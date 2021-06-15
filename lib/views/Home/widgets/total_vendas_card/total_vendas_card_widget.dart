@@ -69,11 +69,11 @@ class TotalVendasCardWidget extends StatelessWidget {
                 Consumer<HomeController>(
                   builder: (context, value, child) {
                     if (value.sales != null) {
-                      var totalVendas = 0;
+                      double totalVendas = 0.0;
                       value.sales.forEach((element) {
                         totalVendas += double.tryParse(
                                 element.value.replaceAll(new RegExp(r'\$'), ''))
-                            .toInt();
+                            .toDouble();
                       });
                       String totalVendasString = totalVendas.toStringAsFixed(2);
 

@@ -27,13 +27,15 @@ class Home extends StatelessWidget {
                 Provider.of<AuthController>(context, listen: false)
                     .logout(context);
               },
-              child: Text('Logout'),
-              style: ButtonStyle(),
+              child: Text('Sair'),
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.transparent)),
             )
           ],
           automaticallyImplyLeading: false,
           centerTitle: true,
-          backgroundColor: Color(0xff71C173),
+          backgroundColor: Colors.white,
           title: Consumer<AuthController>(
             builder: (context, value, child) {
               return Text(

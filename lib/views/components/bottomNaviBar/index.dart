@@ -30,28 +30,31 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     return BottomNavigationBar(
       showUnselectedLabels: true,
       iconSize: 30,
-      backgroundColor: Colors.orange,
-      unselectedItemColor: Color(0xff373435),
+      unselectedItemColor: Colors.grey[800],
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',
+          backgroundColor: Colors.white,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.add_circle_outline),
           label: 'Nova venda',
+          backgroundColor: Colors.white,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.store_mall_directory_outlined),
           label: 'Estoque',
+          backgroundColor: Colors.white,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.attach_money),
           label: 'Vendas',
+          backgroundColor: Colors.white,
         ),
       ],
       currentIndex: _selectedIndex,
-      selectedItemColor: Color(0xff4360F6),
+      selectedItemColor: Colors.blue,
       onTap: _onItemTapped,
     );
   }

@@ -52,8 +52,10 @@ class ProductAddWdiget extends StatelessWidget {
             ),
             Expanded(child: Divider()),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text(
+                    'Valor: R\$ ${double.tryParse(productAdd.price).toStringAsFixed(2)}'),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.red[400],

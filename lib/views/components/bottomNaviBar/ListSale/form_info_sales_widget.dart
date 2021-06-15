@@ -30,6 +30,11 @@ class _FormInfoSalestWidgetWidgetState extends State<FormInfoSalestWidget> {
     var itens = repositorySP.salesProducts;
     final _formKey = GlobalKey<FormState>();
     List<Product> produtosCat;
+
+    // for (var i in repositorySale.sales) {
+    //   print(i.idProduct);
+    // }
+
 //     index = vendas.id_sale;
 //     repositorySP.salesProducts.forEach((sale) {
 //       repositoryProduto.products.forEach((salesProducts) {

@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 
 import 'Stock/form_stock/add_products.dart';
 import 'Stock/form_stock/edit_products.dart';
-import 'components/bottomNaviBar/ListSale/form_info_sales_widget.dart';
 import 'components/bottomNaviBar/ListSale/info_sales.dart';
 import 'components/bottomNaviBar/ListSale/listSales.dart';
 
@@ -49,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.grey,
+        ),
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate

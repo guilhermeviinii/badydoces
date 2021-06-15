@@ -6,25 +6,19 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SaleRepository extends ChangeNotifier {
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  SharedPreferences preferences;
   List<Sale> sales = List<Sale>();
+  bool createdNewSale;
 
   SaleRepository() {
     read();
   }
 
-  Future<bool> create(Sale sale) async {
-    final SharedPreferences prefs = await _prefs;
-    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+  Future<void> create(Sale sale) async {
+    this.preferences = await SharedPreferences.getInstance();
+    Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
     sale.adminId = usuario.id;
-    sale.idProduct.forEach((element) {
-      print(element.id);
-      print(element.amount);
-      print(element.price.toString());
-    });
-    var body = jsonEncode(sale.toJson());
-    print(body);
 
     var response = await http.post(
       'https://backend-badydoces.herokuapp.com/new-sale',
@@ -37,20 +31,22 @@ class SaleRepository extends ChangeNotifier {
     if (response.statusCode == 200) {
       Sale sale = Sale.fromJson(jsonDecode(response.body));
       this.sales.add(sale);
+      this.createdNewSale = true;
       notifyListeners();
-      return true;
+      return;
     }
-    print(response.body);
-    return false;
+    this.createdNewSale = true;
+    notifyListeners();
   }
 
   Future<void> read() async {
     try {
-      final SharedPreferences prefs = await _prefs;
-      Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      this.preferences = await SharedPreferences.getInstance();
+      Admin usuario =
+          Admin.fromJson(jsonDecode(this.preferences?.getString('user')));
       var token = usuario.token;
       var response = await http.get(
-        'https://backend-badydoces.herokuapp.com/show-sales',
+        'https://backend-badydoces.herokuapp.com/show-order-sales',
         headers: {
           'Content-type': '	application/json; charset=UTF-8',
           'Authorization': "Bearer $token"
@@ -65,23 +61,29 @@ class SaleRepository extends ChangeNotifier {
     } catch (err) {}
   }
 
-  Future<void> delete(int id) async {
-    final SharedPreferences prefs = await _prefs;
-    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+  Future<void> delete(String id) async {
+    this.preferences = await SharedPreferences.getInstance();
+    Admin usuario =
+        Admin.fromJson(jsonDecode(this.preferences?.getString('user')));
     var token = usuario.token;
-    var response = await http.delete("/$id", headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': "Bearer $token"
-    });
+    var response = await http.delete(
+        "https://backend-badydoces.herokuapp.com/delete-sale/$id",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer $token"
+        });
     if (response.statusCode == 200) {
       this.sales.removeWhere((sale) => sale.idSale == id);
       notifyListeners();
+    } else {
+      print(response.body);
     }
   }
 
   Future<void> update(Sale sale) async {
-    final SharedPreferences prefs = await _prefs;
-    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+    this.preferences = await SharedPreferences.getInstance();
+    Admin usuario =
+        Admin.fromJson(jsonDecode(this.preferences?.getString('user')));
     var token = usuario.token;
     var response = await http.put("/${sale.idSale}",
         body: jsonEncode(sale.toJson()),

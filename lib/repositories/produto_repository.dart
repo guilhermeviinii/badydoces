@@ -7,16 +7,16 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductRepository extends ChangeNotifier {
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  List<Product> products = List<Product>();
+  SharedPreferences preferences;
+  List<Product> products = <Product>[];
   List<Product> filteredProducts = <Product>[];
   ProductRepository() {
     read();
   }
 
   Future<bool> create(Product product) async {
-    final SharedPreferences prefs = await _prefs;
-    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+    this.preferences = await SharedPreferences.getInstance();
+    Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
     var response = await http.post(
       'https://backend-badydoces.herokuapp.com/new-product',
@@ -39,8 +39,9 @@ class ProductRepository extends ChangeNotifier {
 
   Future<void> read() async {
     try {
-      final SharedPreferences prefs = await _prefs;
-      Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      this.preferences = await SharedPreferences.getInstance();
+      Admin usuario =
+          Admin.fromJson(jsonDecode(preferences?.getString('user')));
       var token = usuario.token;
       var response = await http.get(
         'https://backend-badydoces.herokuapp.com/show-product',
@@ -61,8 +62,9 @@ class ProductRepository extends ChangeNotifier {
 
   Future<void> fetchProductByCategory({String category = ''}) async {
     try {
-      final SharedPreferences prefs = await _prefs;
-      Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      this.preferences = await SharedPreferences.getInstance();
+      Admin usuario =
+          Admin.fromJson(jsonDecode(preferences?.getString('user')));
       var token = usuario.token;
       var response = await http.get(
         'https://backend-badydoces.herokuapp.com/show-product-category/$category',
@@ -81,8 +83,8 @@ class ProductRepository extends ChangeNotifier {
   }
 
   Future<void> delete(String id) async {
-    final SharedPreferences prefs = await _prefs;
-    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+    this.preferences = await SharedPreferences.getInstance();
+    Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
     var response = await http.delete(
         "https://backend-badydoces.herokuapp.com/delete-product/$id",
@@ -97,8 +99,8 @@ class ProductRepository extends ChangeNotifier {
   }
 
   Future<void> update(Product product) async {
-    final SharedPreferences prefs = await _prefs;
-    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+    this.preferences = await SharedPreferences.getInstance();
+    Admin usuario = Admin.fromJson(jsonDecode(preferences.getString('user')));
     var token = usuario.token;
     var response = await http.put(
         "https://backend-badydoces.herokuapp.com/update-product/${product.id}",

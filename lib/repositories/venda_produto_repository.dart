@@ -39,7 +39,8 @@ class SaleProductRepository extends ChangeNotifier {
   }
 
   Future<void> delete(String sale_id) async {
-    var response = await http.delete("/$sale_id");
+    var response = await http
+        .delete("https://backend-badydoces.herokuapp.com/delete-sale/$sale_id");
     if (response.statusCode == 200) {
       this
           .salesProducts

@@ -39,7 +39,7 @@ class NewSaleController extends ChangeNotifier {
       idProduct: products,
     );
     try {
-      return await SaleRepository().create(newSale);
+      await SaleRepository().create(newSale);
     } catch (err) {}
     return false;
   }

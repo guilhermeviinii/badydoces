@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryRepository extends ChangeNotifier {
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  SharedPreferences preferences;
   List<Categoria> categorias = <Categoria>[];
 
   CategoryRepository() {
@@ -32,8 +32,8 @@ class CategoryRepository extends ChangeNotifier {
   }
 
   Future<void> read() async {
-    final SharedPreferences prefs = await _prefs;
-    Admin usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+    this.preferences = await SharedPreferences.getInstance();
+    Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
     var response = await http.get(
       'https://backend-badydoces.herokuapp.com/show-category',

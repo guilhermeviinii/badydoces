@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends ChangeNotifier {
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  SharedPreferences preferences;
   final AdminRepository repository = AdminRepository();
 
   Admin usuario = Admin();
@@ -15,20 +15,19 @@ class AuthController extends ChangeNotifier {
   bool isLogged;
   bool get isLoggedUser => isLogged;
 
-  Future<bool> login() async {
+  Future<void> login() async {
     try {
       repository.admin = usuario;
       isLogged = await repository.login();
       notifyListeners();
-      return isLogged;
     } catch (err) {}
   }
 
   Future<Admin> autenticar() async {
     try {
-      final SharedPreferences prefs = await _prefs;
-      print(prefs);
-      this.usuario = Admin.fromJson(jsonDecode(prefs.getString('user')));
+      this.preferences = await SharedPreferences.getInstance();
+      this.usuario =
+          Admin.fromJson(jsonDecode(this.preferences?.getString('user')));
       isLogged = true;
       notifyListeners();
     } catch (err) {
@@ -39,9 +38,8 @@ class AuthController extends ChangeNotifier {
   }
 
   Future<void> logout(context) async {
-    final SharedPreferences prefs = await _prefs;
-    prefs.clear();
-    print(prefs);
+    this.preferences = await SharedPreferences.getInstance();
+    preferences?.clear();
     Navigator.of(context).pushNamed('/');
   }
 }
