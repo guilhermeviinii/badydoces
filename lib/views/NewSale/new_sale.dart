@@ -1,6 +1,7 @@
 import 'package:badydoces/repositories/admin_repository.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/repositories/produto_repository.dart';
+import 'package:badydoces/repositories/venda_repository.dart';
 import 'package:badydoces/views/NewSale/new_sale_controller.dart';
 import 'package:badydoces/views/NewSale/widgets/product_add/product_add_widget.dart';
 import 'package:badydoces/views/auth/AuthController.dart';
@@ -61,27 +62,62 @@ class NewSale extends StatelessWidget {
                   },
                 )),
           ),
-          ElevatedButton(
-            onPressed: () async {
-              String adminId =
-                  Provider.of<AdminRepository>(context, listen: false).admin.id;
-              bool saleSucess =
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Container(
+              height: 40,
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green[400]),
+                ),
+                onPressed: () async {
+                  print(Provider.of<NewSaleController>(context, listen: false)
+                          .products
+                          .length <=
+                      0);
+                  if (Provider.of<NewSaleController>(context, listen: false)
+                          .products
+                          .length <=
+                      0) {
+                    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 3),
+                      content: Text(
+                        'Nenhum produto adicionado!',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.red[400],
+                    ));
+                    ;
+                  }
+                  String adminId =
+                      Provider.of<AdminRepository>(context, listen: false)
+                          .admin
+                          .id;
                   await Provider.of<NewSaleController>(context, listen: false)
                       .realizarVenda(adminId);
-              if (saleSucess) {
-                Navigator.of(context).pushNamed('/listsales');
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  duration: Duration(seconds: 5),
-                  content: Text(
-                    'Não foi possível finalizar a compra, por favor tente novamente mais tarde',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  backgroundColor: Colors.red[400],
-                ));
-              }
-            },
-            child: Text('Finalizar venda'),
+                  bool created =
+                      Provider.of<SaleRepository>(context, listen: false)
+                          .createdNewSale;
+                  print(created);
+                  if (created == true) {
+                    Provider.of<NewSaleController>(context, listen: false)
+                        .products = [];
+                    Navigator.of(context).pushNamed('/listsales');
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 5),
+                      content: Text(
+                        'Não foi possível finalizar a compra, por favor tente novamente mais tarde',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.red[400],
+                    ));
+                  }
+                },
+                child: Text('Finalizar venda'),
+              ),
+            ),
           ),
         ],
       ),

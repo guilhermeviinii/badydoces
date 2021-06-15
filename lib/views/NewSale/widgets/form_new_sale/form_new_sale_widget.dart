@@ -64,7 +64,7 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                 // The validator receives the text that the user has entered.
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return '';
+                    return 'Por favor, insira o nome do cliente';
                   }
                   return null;
                 },
@@ -112,7 +112,7 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                       // The validator receives the text that the user has entered.
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return '';
+                          return '**';
                         }
                         return null;
                       },
@@ -133,55 +133,64 @@ class _FormNewSaleWidgetState extends State<FormNewSaleWidget> {
                   ),
                 ),
                 onPressed: () {
-                  // if (_formKey.currentState.validate()) {
-                  var price;
-                  Provider.of<ProductRepository>(context, listen: false)
-                      .products
-                      .forEach((element) {
-                    if (element.id ==
-                        Provider.of<NewSaleController>(context, listen: false)
-                            .select_product
-                            .id) {
-                      price = double.tryParse(
-                              element.price.replaceAll(new RegExp(r'\$'), ''))
-                          .toInt();
-                    }
-                  });
-
-                  price = price *
-                      double.tryParse(Provider.of<NewSaleController>(context,
-                                  listen: false)
-                              .fieldsNewSale
-                              .value)
-                          .toInt();
-                  print(price);
-
-                  Product newSale = new Product(
-                      price: price.toString(),
-                      name:
+                  if (_formKey.currentState.validate()) {
+                    var price;
+                    Provider.of<ProductRepository>(context, listen: false)
+                        .products
+                        .forEach((element) {
+                      if (element.id ==
                           Provider.of<NewSaleController>(context, listen: false)
                               .select_product
-                              .name,
-                      id: Provider.of<NewSaleController>(context, listen: false)
-                          .select_product
-                          .id,
-                      amount: double.tryParse(Provider.of<NewSaleController>(
-                                  context,
-                                  listen: false)
-                              .fieldsNewSale
-                              .value)
-                          .round());
-                  Provider.of<NewSaleController>(context, listen: false)
-                      .addProduct(newSale);
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    duration: Duration(seconds: 1),
-                    content: Text(
-                      'Venda adicionada com sucesso',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    backgroundColor: Colors.green,
-                  ));
-                  // }
+                              .id) {
+                        price = double.tryParse(
+                                element.price.replaceAll(new RegExp(r'\$'), ''))
+                            .toDouble();
+                      }
+                    });
+
+                    price = price *
+                        double.tryParse(Provider.of<NewSaleController>(context,
+                                    listen: false)
+                                .fieldsNewSale
+                                .value)
+                            .toInt();
+
+                    Product newSale = new Product(
+                        price: price.toString(),
+                        name: Provider.of<NewSaleController>(context,
+                                listen: false)
+                            .select_product
+                            .name,
+                        id: Provider.of<NewSaleController>(context,
+                                listen: false)
+                            .select_product
+                            .id,
+                        amount: double.tryParse(Provider.of<NewSaleController>(
+                                    context,
+                                    listen: false)
+                                .fieldsNewSale
+                                .value)
+                            .round());
+                    Provider.of<NewSaleController>(context, listen: false)
+                        .addProduct(newSale);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 1),
+                      content: Text(
+                        'Venda adicionada com sucesso',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.green,
+                    ));
+                  } else {
+                    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 1),
+                      content: Text(
+                        'Por favor, preencha os campos corretamente',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.red[400],
+                    ));
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

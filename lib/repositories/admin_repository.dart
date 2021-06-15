@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminRepository extends ChangeNotifier {
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  SharedPreferences preferences;
   Admin admin = Admin();
 
   Future<bool> login() async {
@@ -17,12 +17,12 @@ class AdminRepository extends ChangeNotifier {
       headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
-      final SharedPreferences prefs = await _prefs;
+      this.preferences = await SharedPreferences.getInstance();
       final Admin user = Admin.fromJson(jsonDecode(response.body));
-      prefs.setString(
-        "user",
-        user.toString(),
-      );
+      this.preferences?.setString(
+            "user",
+            user.toString(),
+          );
       return true;
     } else {
       return false;
