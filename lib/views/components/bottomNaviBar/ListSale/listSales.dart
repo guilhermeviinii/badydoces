@@ -1,3 +1,4 @@
+import 'package:badydoces/models/venda.model.dart';
 import 'package:badydoces/repositories/venda_repository.dart';
 import 'package:badydoces/views/components/bottomNaviBar/index.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _ListSalesState extends State<ListSales> {
     var top = selecionado.characters.first.toUpperCase();
     selecionado =
         selecionado.replaceFirst(selecionado.characters.first, top, 0);
-
+    Iterable<Sale> lista_certa;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -54,21 +55,31 @@ class _ListSalesState extends State<ListSales> {
       ),
       body: Column(
         children: [
-          dropDownCAtegoria(),
+          dropDownMeses(),
           Divider(),
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: sales.length,
-              // ignore: missing_return
-              itemBuilder: (_, index) {
-                var vendas = sales[index];
+          Expanded(child: Consumer<SaleRepository>(
+            builder: (context, value, child) {
+              sales.forEach((element) {
                 var selecionado2 = DateFormat("MMMM", "pt_BR")
-                    .format(DateTime.parse(vendas.createdAt));
+                    .format(DateTime.parse(element.createdAt));
+
                 var top2 = selecionado2.characters.first.toUpperCase();
+
                 selecionado2 = selecionado2.replaceFirst(
                     selecionado2.characters.first, top2, 0);
+
                 if (selecionado == selecionado2) {
+                  lista_certa = value.sales;
+                }
+              });
+              print(lista_certa);
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: lista_certa.length,
+                // ignore: missing_return
+                itemBuilder: (_, index) {
+                  var vendas = lista_certa.toList()[index];
+
                   return Dismissible(
                     key: Key(vendas.costumer),
                     onDismissed: (direction) {
@@ -125,10 +136,10 @@ class _ListSalesState extends State<ListSales> {
                       ),
                     ),
                   );
-                }
-              },
-            ),
-          ),
+                },
+              );
+            },
+          )),
         ],
       ),
       bottomNavigationBar: BottomNaviBar(indexTela: 3),
@@ -146,7 +157,7 @@ class _ListSalesState extends State<ListSales> {
 //     }
 //   }
 
-  Container dropDownCAtegoria() {
+  Container dropDownMeses() {
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),

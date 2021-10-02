@@ -2,7 +2,9 @@ import 'package:badydoces/models/categoria.model.dart';
 import 'package:badydoces/models/new_sale_model.dart';
 import 'package:badydoces/models/produto.model.dart';
 import 'package:badydoces/models/venda.model.dart';
+import 'package:badydoces/models/venda_produto.model.dart';
 import 'package:badydoces/repositories/produto_repository.dart';
+import 'package:badydoces/repositories/venda_produto_repository.dart';
 import 'package:badydoces/repositories/venda_repository.dart';
 import 'package:badydoces/views/NewSale/new_sale.dart';
 import 'package:flutter/foundation.dart';
@@ -17,8 +19,10 @@ class NewSaleController extends ChangeNotifier {
   String costumer;
   List<Categoria> categories;
   Sale newSale;
+  SaleProduct newSaleProduct;
   Product select_product;
   bool created;
+  bool created2;
 
   Sale fieldsNewSale = Sale();
 
@@ -49,4 +53,22 @@ class NewSaleController extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  // Future<bool> realizarVendaNpN(int qtd) async {
+  //   created2 = false;
+  //   newSaleProduct = SaleProduct(
+  //     sale_id: fieldsNewSale.idSale,
+  //     idProduct: products,
+  //     qtd: qtd,
+  //   );
+  //   try {
+  //     bool created2 = await SaleProductRepository().create(newSaleProduct);
+  //     notifyListeners();
+  //     print(created2);
+  //     return created2;
+  //   } catch (err) {
+  //     return false;
+  //   }
+  //   notifyListeners();
+  // }
 }

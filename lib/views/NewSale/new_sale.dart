@@ -1,3 +1,4 @@
+import 'package:badydoces/models/produto.model.dart';
 import 'package:badydoces/repositories/admin_repository.dart';
 import 'package:badydoces/repositories/categoria_repository.dart';
 import 'package:badydoces/repositories/produto_repository.dart';
@@ -13,8 +14,18 @@ import 'package:provider/provider.dart';
 import 'widgets/form_new_sale/form_new_sale_widget.dart';
 
 class NewSale extends StatelessWidget {
+  final Product productAdd;
+
+  const NewSale({Key key, this.productAdd}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    List<Product> products =
+        Provider.of<NewSaleController>(context, listen: true).products;
+    double total = 0.0;
+
+    products.forEach((element) {
+      total += double.parse(element.price) * element.amount;
+    });
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -94,7 +105,11 @@ class NewSale extends StatelessWidget {
                   bool created = await Provider.of<NewSaleController>(context,
                           listen: false)
                       .realizarVenda(adminId);
+                  // bool created2 = await Provider.of<NewSaleController>(context,
+                  //         listen: false)
+                  //     .realizarVendaNpN(productAdd.amount);
                   print(created);
+                  //print(created2);
                   if (created == true) {
                     Provider.of<NewSaleController>(context, listen: false)
                         .products = [];
@@ -115,7 +130,7 @@ class NewSale extends StatelessWidget {
                     ));
                   }
                 },
-                child: Text('Finalizar venda'),
+                child: Text('Finalizar venda - R\$ ' + total.toString()),
               ),
             ),
           ),
