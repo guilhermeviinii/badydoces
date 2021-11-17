@@ -24,8 +24,9 @@ class NewSale extends StatelessWidget {
     double total = 0.0;
 
     products.forEach((element) {
-      total += double.parse(element.price) * element.amount;
+      total += double.parse(element.price);
     });
+    String totalString = total.toStringAsFixed(2);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -130,7 +131,8 @@ class NewSale extends StatelessWidget {
                     ));
                   }
                 },
-                child: Text('Finalizar venda - R\$ ' + total.toString()),
+                child: Text(
+                    'Finalizar venda - R\$ ${totalString.replaceAll('\.', ',')}'),
               ),
             ),
           ),

@@ -10,7 +10,7 @@ class AdminRepository extends ChangeNotifier {
   Admin admin = Admin();
 
   Future<bool> login() async {
-    var url = Uri.parse('https://backend-badydoces.herokuapp.com/session');
+    var url = Uri.parse('https://app-bady.herokuapp.com/session');
     var response = await http.post(
       url,
       body: json.encode(admin.toJson()),

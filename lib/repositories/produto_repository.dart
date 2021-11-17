@@ -19,7 +19,7 @@ class ProductRepository extends ChangeNotifier {
     Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
     var response = await http.post(
-      'https://backend-badydoces.herokuapp.com/new-product',
+      'https://app-bady.herokuapp.com/new-product',
       body: jsonEncode(product.toJson()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -45,7 +45,7 @@ class ProductRepository extends ChangeNotifier {
           Admin.fromJson(jsonDecode(preferences?.getString('user')));
       var token = usuario.token;
       var response = await http.get(
-        'https://backend-badydoces.herokuapp.com/show-product',
+        'https://app-bady.herokuapp.com/show-product',
         headers: {
           'Content-type': '	application/json; charset=UTF-8',
           'Authorization': "Bearer $token"
@@ -68,7 +68,7 @@ class ProductRepository extends ChangeNotifier {
           Admin.fromJson(jsonDecode(preferences?.getString('user')));
       var token = usuario.token;
       var response = await http.get(
-        'https://backend-badydoces.herokuapp.com/show-product-category/$category',
+        'https://app-bady.herokuapp.com/show-product-category/$category',
         headers: {
           'Content-type': '	application/json; charset=UTF-8',
           'Authorization': "Bearer $token"
@@ -88,7 +88,7 @@ class ProductRepository extends ChangeNotifier {
     Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
     var response = await http.delete(
-        "https://backend-badydoces.herokuapp.com/delete-product/$id",
+        "https://app-bady.herokuapp.com/delete-product/$id",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': "Bearer $token"
@@ -104,7 +104,7 @@ class ProductRepository extends ChangeNotifier {
     Admin usuario = Admin.fromJson(jsonDecode(preferences.getString('user')));
     var token = usuario.token;
     var response = await http.put(
-        "https://backend-badydoces.herokuapp.com/update-product/${product.id}",
+        "https://app-bady.herokuapp.com/update-product/${product.id}",
         body: jsonEncode(product.toJson()),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

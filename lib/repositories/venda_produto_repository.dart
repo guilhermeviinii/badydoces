@@ -20,7 +20,7 @@ class SaleProductRepository extends ChangeNotifier {
     var token = usuario.token;
 
     var response = await http.post(
-      'https://backend-badydoces.herokuapp.com/new-sale-product',
+      'https://app-bady.herokuapp.com/new-sale-product',
       body: jsonEncode(saleProduct.toJson()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -41,7 +41,7 @@ class SaleProductRepository extends ChangeNotifier {
     Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
     var response = await http.get(
-      'https://backend-badydoces.herokuapp.com/show-sale-product/:id',
+      'https://app-bady.herokuapp.com/show-sale-product/:id',
       headers: {
         'Content-type': '	application/json; charset=UTF-8',
         'Authorization': "Bearer $token"

@@ -92,6 +92,43 @@ class Home extends StatelessWidget {
               ],
             ),
           ),
+          Row(
+            //mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                width: 500,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0)),
+                    padding: EdgeInsets.all(20),
+                    onSurface: Colors.black,
+                    textStyle: TextStyle(
+                      color: Colors.green[200],
+                    ),
+                  ),
+                  onPressed: () => Navigator.of(context).pushNamed(''),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 16),
+                        child: Icon(
+                          Icons.paste,
+                          size: 30,
+                        ),
+                      ),
+                      Text(
+                        'Relatório de Produto',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       bottomNavigationBar: BottomNaviBar(),

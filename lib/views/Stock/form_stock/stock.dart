@@ -6,6 +6,7 @@ import 'package:badydoces/repositories/produto_repository.dart';
 import 'package:badydoces/views/components/bottomNaviBar/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class Stock extends StatefulWidget {
@@ -27,7 +28,16 @@ class _StockState extends State<Stock> {
     Iterable<Product> produtosCat;
 //
     //    var produtos = repositoryProduct.products;
+    List<Product> products =
+        Provider.of<ProductRepository>(context, listen: true).products;
+    double total = 0.00;
 
+    NumberFormat formater = NumberFormat('00.00');
+    products.forEach((element) {
+      var m = element.price.replaceAll("\$", '');
+      total += double.parse(m) * element.amount;
+    });
+    String totalString = total.toStringAsFixed(2);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -38,7 +48,7 @@ class _StockState extends State<Stock> {
         ),
         backgroundColor: Colors.white,
         title: Text(
-          'Estoque',
+          "Estoque - R\$ ${totalString.replaceAll('\.', ',')}",
           style: GoogleFonts.ubuntu(
             color: Colors.black,
           ),
@@ -55,6 +65,7 @@ class _StockState extends State<Stock> {
                 produtosCat = value.products.where((product) =>
                     product.name_category == itemSelecionado.category_name);
               }
+
               return ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: (itemSelecionado == null)
@@ -73,49 +84,109 @@ class _StockState extends State<Stock> {
                     confirmDismiss: (direction) {
                       return confirmarExclusao(context, product.id);
                     },
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          left: 30, right: 30, top: 10, bottom: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.fromBorderSide(
-                            BorderSide(color: Colors.blue, width: 2.0)),
-                      ),
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                            '/edit_product',
-                            arguments: product,
-                          );
-                        },
-                        title: Text(
-                          product.name,
-                          style: GoogleFonts.ubuntu(
-                            color: Colors.black,
-                          ),
-                        ),
-                        subtitle: Text(
-                          'R' + product.price.toString(),
-                          style: GoogleFonts.ubuntu(
-                            color: Colors.black,
-                          ),
-                        ),
-                        trailing: Container(
-                          width: 20,
-                          child: Row(
-                            children: [
-                              Text(
-                                product.amount.toString(),
-                                style: GoogleFonts.ubuntu(
-                                  color: Colors.black,
-                                  fontSize: 16,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Flexible(
+                              flex: 2,
+                              child: (product.amount == 0)
+                                  ? Container(
+                                      margin: EdgeInsets.only(
+                                          left: 30,
+                                          right: 0,
+                                          top: 10,
+                                          bottom: 8),
+                                      child: Icon(
+                                        Icons.dangerous,
+                                        color: Colors.red,
+                                        size: 40,
+                                      ),
+                                    )
+                                  : (product.amount < 6)
+                                      ? Container(
+                                          margin: EdgeInsets.only(
+                                              left: 30,
+                                              right: 0,
+                                              top: 10,
+                                              bottom: 8),
+                                          child: Icon(
+                                            Icons.error_outline,
+                                            color: Colors.yellow[700],
+                                            size: 40,
+                                          ),
+                                        )
+                                      : Container(
+                                          margin: EdgeInsets.only(
+                                              left: 30,
+                                              right: 0,
+                                              top: 10,
+                                              bottom: 8),
+                                          child: Icon(
+                                            Icons.all_inbox,
+                                            color: Colors.blue,
+                                            size: 40,
+                                          ),
+                                        ),
+                            ),
+                            Flexible(
+                              flex: 9,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    left: 30, right: 10, top: 10, bottom: 8),
+                                // decoration: BoxDecoration(
+                                //   color: Colors.white,
+                                //   borderRadius:
+                                //       BorderRadius.only(bottomRight: Radius.zero),
+                                //   border: Border.fromBorderSide((product.amount ==
+                                //           0)
+                                //       ? BorderSide(color: Colors.red, width: 2.0)
+                                //       : (product.amount < 6)
+                                //           ? BorderSide(
+                                //               color: Colors.yellow[700], width: 2.0)
+                                //           : BorderSide(
+                                //               color: Colors.blue, width: 2.0)),
+                                // ),
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                      '/edit_product',
+                                      arguments: product,
+                                    );
+                                  },
+                                  title: Text(
+                                    product.name,
+                                    style: GoogleFonts.ubuntu(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    'R' + product.price.toString(),
+                                    style: GoogleFonts.ubuntu(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  trailing: Container(
+                                    width: 20,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          product.amount.toString(),
+                                          style: GoogleFonts.ubuntu(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ),
+                        Divider(),
+                      ],
                     ),
                   );
                 },

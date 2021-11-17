@@ -36,7 +36,7 @@ class CategoryRepository extends ChangeNotifier {
     Admin usuario = Admin.fromJson(jsonDecode(preferences?.getString('user')));
     var token = usuario.token;
     var response = await http.get(
-      'https://backend-badydoces.herokuapp.com/show-category',
+      'https://app-bady.herokuapp.com/show-category',
       headers: {
         'Content-type': '	application/json; charset=utf-8',
         'Authorization': "Bearer $token"

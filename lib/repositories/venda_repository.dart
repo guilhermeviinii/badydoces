@@ -22,7 +22,7 @@ class SaleRepository extends ChangeNotifier {
     sale.adminId = usuario.id;
 
     var response = await http.post(
-      'https://backend-badydoces.herokuapp.com/new-sale',
+      'https://app-bady.herokuapp.com/new-sale',
       body: jsonEncode(sale.toJson()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -46,7 +46,7 @@ class SaleRepository extends ChangeNotifier {
           Admin.fromJson(jsonDecode(this.preferences?.getString('user')));
       var token = usuario.token;
       var response = await http.get(
-        'https://backend-badydoces.herokuapp.com/show-order-sales',
+        'https://app-bady.herokuapp.com/show-order-sales',
         headers: {
           'Content-type': '	application/json; charset=UTF-8',
           'Authorization': "Bearer $token"
@@ -67,7 +67,7 @@ class SaleRepository extends ChangeNotifier {
         Admin.fromJson(jsonDecode(this.preferences?.getString('user')));
     var token = usuario.token;
     var response = await http.delete(
-        "https://backend-badydoces.herokuapp.com/delete-sale/$id",
+        "https://app-bady.herokuapp.com/delete-sale/$id",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': "Bearer $token"
