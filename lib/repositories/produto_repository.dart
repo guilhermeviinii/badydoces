@@ -29,6 +29,7 @@ class ProductRepository extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       Product product = Product.fromJson(jsonDecode(response.body));
+
       this.products.add(product);
       read();
 
@@ -51,9 +52,10 @@ class ProductRepository extends ChangeNotifier {
           'Authorization': "Bearer $token"
         },
       );
+
       if (response.statusCode == 200) {
-        Iterable products = jsonDecode(response.body) as List;
-        var lista = products.map((objeto) => Product.fromJson(objeto));
+        Iterable products1 = jsonDecode(response.body) as List;
+        var lista = products1.map((objeto) => Product.fromJson(objeto));
         this.products = lista.toList();
 
         notifyListeners();
@@ -74,6 +76,7 @@ class ProductRepository extends ChangeNotifier {
           'Authorization': "Bearer $token"
         },
       );
+      print(response.statusCode);
       if (response.statusCode == 200) {
         Iterable products = jsonDecode(response.body) as List;
         var lista = products.map((objeto) => Product.fromJson(objeto));

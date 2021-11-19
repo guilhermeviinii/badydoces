@@ -31,7 +31,7 @@ class _DropDownProductWidgetState extends State<DropDownProductWidget> {
             child: DropdownButtonHideUnderline(
               child: DropdownButton(
                 hint: new Text("Selecione um produto"),
-                items: ["Selecione uma categoria"].map(
+                items: ["Selecione um produto"].map(
                   (String value) {
                     return new DropdownMenuItem<String>(
                       value: value,

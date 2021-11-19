@@ -31,7 +31,7 @@ class _StockState extends State<Stock> {
     List<Product> products =
         Provider.of<ProductRepository>(context, listen: true).products;
     double total = 0.00;
-
+    print(products);
     NumberFormat formater = NumberFormat('00.00');
     products.forEach((element) {
       var m = element.price.replaceAll("\$", '');

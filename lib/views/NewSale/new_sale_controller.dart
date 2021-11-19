@@ -19,13 +19,13 @@ class NewSaleController extends ChangeNotifier {
   String costumer;
   List<Categoria> categories;
   Sale newSale;
+  SaleProduct newSale2;
   SaleProduct newSaleProduct;
   Product select_product;
   bool created;
   bool created2;
 
   Sale fieldsNewSale = Sale();
-
   void addProduct(Product product) {
     print(product.amount);
     this.products.add(product);
@@ -44,6 +44,10 @@ class NewSaleController extends ChangeNotifier {
       costumer: fieldsNewSale.costumer,
       idProduct: products,
     );
+    // newSale2 = SaleProduct(
+    //  product_id: products,
+    //  sale_id: newSale.idSale,
+    // );
     try {
       bool created = await SaleRepository().create(newSale);
       notifyListeners();
